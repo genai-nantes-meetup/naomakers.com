@@ -18,7 +18,8 @@ jobs:
         uses: dependabot/fetch-metadata@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      # Auto-merge patch & minor only — major bumps are left for manual review.
+      # Auto-merge patch & minor bumps, plus major bumps for GitHub Actions
+      # (pinned, low-risk); major bumps of npm packages are left for manual review.
       - name: Wait for CI checks to pass
         if: steps.meta.outputs.update-type != 'version-update:semver-major' || steps.meta.outputs.package-ecosystem == 'github_actions'
         run: gh pr checks "$PR_URL" --watch --interval 30

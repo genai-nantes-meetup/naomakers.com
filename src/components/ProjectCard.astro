@@ -12,7 +12,9 @@ const { title, kind, description, url, image, wip } = project;
 
 // Upcoming projects have no external link and render as a plain card.
 const Tag = url ? 'a' : 'div';
-const linkAttrs = url ? { href: url, target: '_blank', rel: 'noopener' } : {};
+const linkAttrs = url
+  ? { href: url, target: '_blank', rel: 'noopener noreferrer' }
+  : {};
 const num = String(index).padStart(2, '0');
 ---
 

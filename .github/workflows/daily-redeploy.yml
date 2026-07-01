@@ -11,4 +11,6 @@ jobs:
     permissions: {}
     steps:
       - name: Redeploy
-        run: curl -X POST "${{ secrets.VERCEL_DEPLOY }}"
+        run: curl --fail --silent --show-error -X POST "$VERCEL_DEPLOY"
+        env:
+          VERCEL_DEPLOY: ${{ secrets.VERCEL_DEPLOY }}
