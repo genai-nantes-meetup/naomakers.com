@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+
+const count = String(projects.length).padStart(2, '0');
+
+// JSON-LD: the projects as an ItemList of recurring event series, so search
+// engines and AI answer engines can enumerate what Naomakers runs.
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Projets de Naomakers',
+  itemListElement: projects.map((project, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'EventSeries',
+      name: project.title,
+      description: project.description,
+      ...(project.url ? { url: project.url } : {}),
+      organizer: {
+        '@type': 'NGO',
+        name: 'Naomakers',
+        url: 'https://naomakers.com',
+      },
+      location: { '@type': 'Place', name: 'Nantes, France' },
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title="Naomakers — association nantaise pour le numérique et la tech"
+  description="Naomakers, association à but non lucratif, promeut le numérique à Nantes et accompagne l'écosystème tech : hackathons, meetups et conférences."
+>
+  <div class="container">
+    <div class="sheet">
+      <div class="topbar">
+        <span class="wordmark">Naomakers</span>
+        <span class="mono ref">Nantes · numérique · non-profit</span>
+      </div>
+
+      <header class="hero">
+        <p class="eyebrow mono">Association à but non lucratif · Nantes</p>
+        <h1>On fait rayonner le numérique<br />et la tech, à Nantes.</h1>
+        <p class="lede">
+          Naomakers promeut le secteur du numérique sur le territoire nantais et
+          accompagne les personnes comme les acteurs de l'écosystème
+          technologique. On agit à travers des hackathons, des meetups et des
+          conférences ouverts à toutes et tous.
+        </p>
+      </header>
+
+      <div class="section-label">
+        <h2 class="mono">Nos projets</h2>
+        <span class="mono count">[ {count} ]</span>
+      </div>
+
+      <section class="grid">
+        {
+          projects.map((project, i) => (
+            <ProjectCard project={project} index={i + 1} />
+          ))
+        }
+      </section>
+    </div>
+  </div>
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(itemList)}
+    is:inline
+  />
+</BaseLayout>
+
+<style>
+  .sheet {
+    margin-top: var(--space-6);
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+    padding: clamp(var(--space-3), 4vw, var(--space-6));
+  }
+
+  .topbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: var(--space-2);
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .wordmark {
+    font-weight: 700;
+    font-size: var(--step-1);
+    letter-spacing: -0.03em;
+  }
+
+  .ref {
+    color: var(--muted);
+  }
+
+  .hero {
+    padding-block: clamp(var(--space-6), 8vw, var(--space-8));
+    max-width: 44rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    margin: 0 0 var(--space-3);
+    padding: 0.3rem 0.6rem;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(2.2rem, 6.5vw, var(--step-4));
+  }
+
+  .lede {
+    max-width: 40rem;
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .section-label h2 {
+    margin: 0;
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+  }
+
+  .count {
+    color: var(--muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 720px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

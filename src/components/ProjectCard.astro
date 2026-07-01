@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, kind, description, url, image, wip } = project;
+
+// Upcoming projects have no external link and render as a plain card.
+const Tag = url ? 'a' : 'div';
+const linkAttrs = url ? { href: url, target: '_blank', rel: 'noopener' } : {};
+const num = String(index).padStart(2, '0');
+---
+
+<Tag class:list={['card', { 'card--wip': wip }]} {...linkAttrs}>
+  <header class="card-head">
+    <span class="idx mono">{num}</span>
+    <span class="kind mono">{kind}</span>
+  </header>
+
+  <div class="card-media">
+    {
+      image ? (
+        <Image
+          src={image}
+          alt={`Visuel du projet ${title}`}
+          widths={[400, 800]}
+          sizes="(max-width: 760px) 100vw, 520px"
+        />
+      ) : (
+        <div class="hatch" aria-hidden="true" />
+      )
+    }
+    {wip && <span class="tag mono">Bientôt</span>}
+  </div>
+
+  <div class="card-body">
+    <h2>{title}</h2>
+    <p>{description}</p>
+    {
+      url && (
+        <span class="card-link mono">
+          Découvrir <span class="arrow">→</span>
+        </span>
+      )
+    }
+  </div>
+</Tag>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+  }
+
+  a.card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 0 var(--accent);
+  }
+
+  .card-head {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: var(--space-2);
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .idx {
+    display: grid;
+    place-items: center;
+    padding-inline: var(--space-2);
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .kind {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem var(--space-2);
+    color: var(--muted);
+  }
+
+  .card-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-bottom: 1.5px solid var(--ink);
+    overflow: hidden;
+  }
+
+  .card-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* Unify the disparate source visuals; resolve to full colour on hover. */
+    filter: grayscale(0.35) contrast(1.03);
+    transition: filter var(--dur) var(--ease);
+  }
+
+  a.card:hover .card-media :global(img) {
+    filter: grayscale(0) contrast(1);
+  }
+
+  .hatch {
+    width: 100%;
+    height: 100%;
+    background-color: var(--accent);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--ink) 0 1.5px,
+      transparent 1.5px 15px
+    );
+    opacity: 0.9;
+  }
+
+  .tag {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    padding: 0.25rem 0.55rem;
+    background: var(--ink);
+    color: var(--bg);
+    font-weight: 700;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3);
+  }
+
+  .card-body h2 {
+    margin: 0;
+    font-size: var(--step-1);
+  }
+
+  .card-body p {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--step-0);
+  }
+
+  .card-link {
+    margin-top: var(--space-1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .arrow {
+    display: inline-block;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  a.card:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  .card--wip {
+    cursor: default;
+  }
+</style>
