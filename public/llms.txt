@@ -1,0 +1,14 @@
+# Naomakers
+
+> Naomakers est une association nantaise à but non lucratif qui promeut le secteur du numérique sur le territoire nantais et accompagne les personnes et les acteurs de l'écosystème technologique, à travers des hackathons, des meetups et des conférences ouverts à toutes et tous.
+
+## Projets
+
+- [Startup Weekend Nantes](https://startupweekendnantes.fr): 54 heures pour transformer une idée en startup, du pitch du vendredi soir au jury du dimanche.
+- [SHIFT Hackathon](https://shift-hackathon.com): 48 heures pour concevoir un produit d'IA générative, entre designers, devs et product lovers.
+- [Generative AI Nantes](https://www.meetup.com/generative-ai-nantes): le meetup nantais dédié à l'IA générative et aux LLM, avec talks et workshops pour la communauté tech et produit.
+- Gen AI Days: la future conférence de référence sur l'IA générative à Nantes, actuellement en préparation.
+
+## Contact
+
+- Email: team@naomakers.com
