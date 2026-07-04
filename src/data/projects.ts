@@ -30,7 +30,7 @@ export const projects: Project[] = [
     image: startupWeekend,
   },
   {
-    title: 'SHIFT Hackathon',
+    title: 'Shift, le Hackathon Gen AI',
     kind: 'Hackathon · 48h · Gen AI',
     description:
       "48 heures pour concevoir un produit d'IA générative, entre designers, devs et product lovers.",
