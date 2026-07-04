@@ -1,9 +1,12 @@
-----
+---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import TeamMember from '../components/TeamMember.astro';
 import { projects } from '../data/projects';
+import { team } from '../data/team';
 
 const count = String(projects.length).padStart(2, '0');
+const teamCount = String(team.length).padStart(2, '0');
 
 // JSON-LD: the projects as an ItemList of recurring event series, so search
 // engines and AI answer engines can enumerate what Naomakers runs.
@@ -63,6 +66,20 @@ const itemList = {
             <ProjectCard project={project} index={i + 1} />
           ))
         }
+      </section>
+
+      <div class="section-label section-label--team">
+        <h2 class="mono">L'équipe</h2>
+        <span class="mono count">[ {teamCount} ]</span>
+      </div>
+
+      <p class="team-lede">
+        Le bureau de l'association, tenu bénévolement par des acteurs de
+        l'écosystème tech nantais.
+      </p>
+
+      <section class="grid">
+        {team.map((member, i) => <TeamMember member={member} index={i + 1} />)}
       </section>
     </div>
   </div>
@@ -136,6 +153,17 @@ const itemList = {
     padding-bottom: var(--space-2);
     margin-bottom: var(--space-4);
     border-bottom: 1.5px solid var(--ink);
+  }
+
+  .section-label--team {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-2);
+  }
+
+  .team-lede {
+    max-width: 40rem;
+    margin: 0 0 var(--space-4);
+    color: var(--muted);
   }
 
   .section-label h2 {
