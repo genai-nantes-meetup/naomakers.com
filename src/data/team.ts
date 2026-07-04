@@ -16,23 +16,23 @@ export type Member = {
  */
 export const team: Member[] = [
   {
-    name: '[À compléter]',
-    role: 'Président·e',
+    name: 'Maxime Pitussi',
+    role: 'Président',
     bio: 'Pilote la stratégie et représente Naomakers auprès de l’écosystème nantais.',
   },
   {
-    name: '[À compléter]',
-    role: 'Vice-président·e',
+    name: 'Samuel Berthe',
+    role: 'Vice-président',
     bio: 'Épaule la présidence et coordonne les projets — hackathons, meetups, conférence.',
   },
   {
-    name: '[À compléter]',
-    role: 'Trésorier·ère',
+    name: 'Jaafar Steiblen-Raji',
+    role: 'Trésorier',
     bio: 'Tient les comptes de l’association et sécurise le budget de chaque événement.',
   },
   {
-    name: '[À compléter]',
-    role: 'Secrétaire',
-    bio: 'Gère la vie associative : PV, adhésions et coordination interne du bureau.',
+    name: 'Florence Poyvre',
+    role: 'Membre du bureau',
+    bio: 'Contribue à la vie associative et à la coordination interne du bureau.',
   },
 ];
