@@ -136,15 +136,12 @@ const jsonLd = {
           </div>
           <div class="field">
             <span class="mono label">Statut</span>
-            <!-- Discreet link: the "·" points to the association's official statutes document -->
-            <span class="value"
-              >Association loi 1901<a
-                class="contact-dot"
-                href="https://drive.google.com/file/d/1cl5sOdBnbweNvQ-F714bRpftWKmOZHVm/view?usp=sharing"
-                target="_blank"
-                rel="noopener"
-                aria-label="Voir les statuts">·</a
-              ></span
+            <a
+              class="value value-link"
+              href="https://drive.google.com/file/d/1cl5sOdBnbweNvQ-F714bRpftWKmOZHVm/view?usp=sharing"
+              target="_blank"
+              rel="noopener"
+              aria-label="Voir les statuts de l'association">Association loi 1901</a
             >
           </div>
           <div class="field">
@@ -195,6 +192,17 @@ const jsonLd = {
 
       .value {
         font-weight: 500;
+      }
+
+      .value-link {
+        color: inherit;
+        text-decoration: underline dotted;
+        text-underline-offset: 3px;
+        transition: color var(--dur) var(--ease);
+      }
+
+      .value-link:hover {
+        color: var(--muted);
       }
 
       .contact-dot {
