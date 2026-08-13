@@ -1,4 +1,4 @@
-# DESIGN.md — naomakers.com
+# DESIGN.md: naomakers.com
 
 Single source of truth for the visual system. The CSS, components and tokens are
 projections of this file; if they drift, this file wins.
@@ -7,7 +7,7 @@ projections of this file; if they drift, this file wins.
 
 - **Artifact:** marketing / showcase landing page for a non-profit association,
   listing 4 event projects.
-- **Audience & positioning:** Nantes tech community (devs, designers, product) —
+- **Audience & positioning:** Nantes tech community (devs, designers, product),
   _maker_ / hackathon culture. Grassroots, hands-on, energetic, technical.
 - **Primary outcome:** let visitors discover the 4 projects and open their sites.
 - **Brand adjectives:** builder · frank · structured · community-driven · energetic.
@@ -20,15 +20,15 @@ sheet: a light gridded ground, crisp ink rules, monospace annotations, and
 numbered "spec sheet" project cards. Deliberately the opposite of the
 violet-on-dark "AI" default (the red-ocean look this project explicitly avoids).
 
-**Signature move:** project cards are numbered technical fiches — a lime index
+**Signature move:** project cards are numbered technical fiches: a lime index
 chip (`01`–`04`) + a monospace category label in a ruled header, sitting on a
 blueprint grid, with a **hard offset lime shadow** appearing on hover.
 
 ## Typography
 
-- **Display & body:** `Space Grotesk` (400/500/700) — engineered grotesque with
+- **Display & body:** `Space Grotesk` (400/500/700): engineered grotesque with
   character. Never Inter/Roboto/system as primary.
-- **Mono:** `Space Mono` (400/700) — labels, metadata, index numbers, eyebrows,
+- **Mono:** `Space Mono` (400/700): labels, metadata, index numbers, eyebrows,
   counts, links. Same-family cohesion with the display face.
 - **Scale:** major third (1.25), base 1rem → `--step--1 … --step-4`.
 
@@ -46,7 +46,7 @@ blueprint grid, with a **hard offset lime shadow** appearing on hover.
 | Success / Warning / Error | `--success/--warning/--error` | greens/amber/red in OKLCH               |
 
 Neutral dominates; ink carries structure; **lime is used sparingly** (index
-chips, hover shadow, ticks). Lime never carries body text on white (contrast) —
+chips, hover shadow, ticks). Lime never carries body text on white (contrast);
 it is always a fill with ink on top.
 
 ## Tokens
@@ -54,7 +54,7 @@ it is always a fill with ink on top.
 - **Spacing:** 8px base (`--space-1…8`).
 - **Radius:** `--radius: 0` (sharp) with `--radius-sm: 2px` for small tags. Two
   values max, no blob-rounding.
-- **Shadow:** ONE approach — defined edge (ink borders) at rest, hard offset
+- **Shadow:** ONE approach: defined edge (ink borders) at rest, hard offset
   lime shadow (`6px 6px 0 var(--accent)`) on hover. No diffuse drop shadows.
 - **Motion:** `--dur: 180ms`, `--ease: cubic-bezier(0.2,0,0,1)`; transform +
   opacity only.
@@ -79,7 +79,7 @@ it is always a fill with ink on top.
 
 ## Contact
 
-`team@naomakers.com` is intentionally discreet — a small mailto in the footer
+`team@naomakers.com` is intentionally discreet: a small mailto in the footer
 title-block, not a prominent CTA (per brief: "hidden somewhere").
 
 ## Slop audit
@@ -90,5 +90,5 @@ title-block, not a prominent CTA (per brief: "hidden somewhere").
 
 ## Changelog
 
-- v2 — Blueprint maker redesign (light + lime), away from the initial
+- v2: Blueprint maker redesign (light + lime), away from the initial
   violet-on-dark theme flagged as AI-slop.

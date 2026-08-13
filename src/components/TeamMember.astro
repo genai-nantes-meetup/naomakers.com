@@ -11,14 +11,14 @@ const { name, role, bio, url } = member;
 
 const num = String(index).padStart(2, '0');
 
-// Blueprint-style monogram from the name — first letter of first two words,
+// Blueprint-style monogram from the name: first letter of first two words,
 // with a graceful fallback for the placeholder "[À compléter]" pattern.
 const cleaned = name.replace(/[[\]]/g, '').trim();
 const parts = cleaned.split(/\s+/).filter(Boolean);
 const monogram =
   parts.length >= 2
     ? (parts[0][0] + parts[1][0]).toUpperCase()
-    : (parts[0]?.[0] ?? '—').toUpperCase();
+    : (parts[0]?.[0] ?? '-').toUpperCase();
 
 const Tag = url ? 'a' : 'div';
 const linkAttrs = url

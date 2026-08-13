@@ -2,7 +2,7 @@
 
 Showcase website for **Naomakers**, a Nantes-based non-profit association that
 promotes the digital sector in Nantes and supports the people and players of the
-tech ecosystem — through hackathons, meetups and conferences.
+tech ecosystem, through hackathons, meetups and conferences.
 
 Built with [Astro](https://astro.build) as a fully static site and deployed on
 Vercel.

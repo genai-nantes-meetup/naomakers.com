@@ -10,7 +10,7 @@ export type Member = {
 };
 
 /**
- * Placeholder scaffold — replace names, bios and urls with the real bureau
+ * Placeholder scaffold: replace names, bios and urls with the real bureau
  * before shipping. The four roles below are the standard "loi 1901" bureau
  * for a non-profit association, matching the footer's "Association loi 1901".
  */
@@ -23,7 +23,7 @@ export const team: Member[] = [
   {
     name: 'Samuel Berthe',
     role: 'Vice-président',
-    bio: 'Épaule la présidence et coordonne les projets — hackathons, meetups, conférence.',
+    bio: 'Épaule la présidence et coordonne les projets : hackathons, meetups, conférence.',
   },
   {
     name: 'Jaafar Steiblen-Raji',
