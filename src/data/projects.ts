@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import startupWeekend from '../assets/startup-weekend-nantes.jpg';
 import shiftHackathon from '../assets/shift-hackathon.webp';
 import generativeAiNantes from '../assets/generative-ai-nantes.webp';
+import genAiDays from '../assets/genai-days-nantes.jpg';
 
 export type Project = {
   /** Displayed project name. */
@@ -47,9 +48,9 @@ export const projects: Project[] = [
   },
   {
     title: 'Gen AI Days',
-    kind: 'Conférence · À venir',
-    description:
-      "La future conférence de référence sur l'IA générative à Nantes, actuellement en préparation.",
+    kind: 'Conférence',
+    description: "La conférence nationale sur l'IA générative.",
+    image: genAiDays,
     wip: true,
   },
 ];
