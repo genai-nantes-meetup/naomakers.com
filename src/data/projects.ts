@@ -49,8 +49,9 @@ export const projects: Project[] = [
   {
     title: 'Gen AI Days',
     kind: 'Conférence',
-    description: "La conférence nationale sur l'IA générative.",
+    description:
+      "La conférence nationale sur l'IA générative à Nantes : talks et rencontres pour la communauté tech, produit et business autour des LLM et de la Gen AI.",
+    url: 'https://genai-days-nantes.com',
     image: genAiDays,
-    wip: true,
   },
 ];

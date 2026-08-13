@@ -12,7 +12,7 @@ Vercel.
 - [Startup Weekend Nantes](https://startupweekendnantes.fr)
 - [SHIFT Hackathon](https://shift-hackathon.com)
 - [Generative AI Nantes](https://www.meetup.com/generative-ai-nantes)
-- Gen AI Days _(work in progress)_
+- [Gen AI Days](https://genai-days-nantes.com)
 
 ## Development
 
