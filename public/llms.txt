@@ -5,8 +5,8 @@
 ## Projets
 
 - [Startup Weekend Nantes](https://startupweekendnantes.fr): 54 heures pour transformer une idée en startup, du pitch du vendredi soir au jury du dimanche.
-- [SHIFT Hackathon](https://shift-hackathon.com): 48 heures pour concevoir un produit d'IA générative, entre designers, devs et product lovers.
-- [Generative AI Nantes](https://www.meetup.com/generative-ai-nantes): le meetup nantais dédié à l'IA générative et aux LLM, avec talks et workshops pour la communauté tech et produit.
+- [Shift, le Hackathon Gen AI](https://shift-hackathon.com): 48 heures pour concevoir un produit d'IA générative, entre designers, devs et product lovers. NPS de 88 auprès des participants.
+- [Generative AI Nantes](https://www.meetup.com/generative-ai-nantes): le meetup nantais dédié à l'IA générative et aux LLM, avec talks et workshops pour la communauté tech et produit. Noté 4,8/5 sur 234 avis.
 - [Gen AI Days](https://genai-days-nantes.com): la conférence nationale sur l'IA générative à Nantes, avec talks et rencontres pour la communauté tech, produit et business autour des LLM et de la Gen AI.
 
 ## Contact

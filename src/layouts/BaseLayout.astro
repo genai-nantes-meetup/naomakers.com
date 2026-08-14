@@ -29,7 +29,15 @@ const jsonLd = {
       email: 'team@naomakers.com',
       description: orgDescription,
       image: ogImage.href,
+      foundingDate: '2018',
+      slogan: 'On fait rayonner le numérique et la tech, à Nantes.',
       areaServed: 'Nantes',
+      knowsAbout: [
+        'Intelligence artificielle générative',
+        'Hackathons',
+        'Entrepreneuriat tech',
+        'Écosystème numérique nantais',
+      ],
       location: {
         '@type': 'Place',
         address: {
@@ -37,6 +45,13 @@ const jsonLd = {
           addressLocality: 'Nantes',
           addressCountry: 'FR',
         },
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: 'team@naomakers.com',
+        contactType: 'customer support',
+        areaServed: 'FR',
+        availableLanguage: ['French'],
       },
       sameAs: [
         'https://www.meetup.com/generative-ai-nantes',
@@ -130,7 +145,7 @@ const jsonLd = {
               >2018<a
                 class="contact-dot"
                 href="mailto:team@naomakers.com"
-                aria-label="Nous contacter">·</a
+                aria-label="Nous contacter">✉</a
               ></span
             >
           </div>
@@ -221,8 +236,8 @@ const jsonLd = {
         min-height: 24px;
         vertical-align: middle;
         text-decoration: none;
-        color: var(--muted);
-        opacity: 0.6;
+        color: var(--ink);
+        font-size: 0.9em;
         transition: opacity var(--dur) var(--ease);
       }
 

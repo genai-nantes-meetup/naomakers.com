@@ -18,16 +18,33 @@ const itemList = {
     '@type': 'ListItem',
     position: i + 1,
     item: {
-      '@type': 'EventSeries',
+      '@type': project.eventType
+        ? ['EventSeries', project.eventType]
+        : 'EventSeries',
       name: project.title,
       description: project.description,
       ...(project.url ? { url: project.url } : {}),
-      organizer: {
-        '@type': 'NGO',
-        name: 'Naomakers',
-        url: 'https://naomakers.com',
-      },
+      organizer: { '@id': 'https://naomakers.com/#organization' },
       location: { '@type': 'Place', name: 'Nantes, France' },
+      ...(project.rating
+        ? {
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: project.rating.value,
+              ratingCount: project.rating.count,
+              bestRating: project.rating.bestRating,
+            },
+          }
+        : {}),
+      ...(project.nps !== undefined
+        ? {
+            additionalProperty: {
+              '@type': 'PropertyValue',
+              name: 'Net Promoter Score',
+              value: project.nps,
+            },
+          }
+        : {}),
     },
   })),
 };
@@ -40,7 +57,7 @@ const itemList = {
   <div class="container">
     <div class="sheet">
       <div class="topbar">
-        <span class="wordmark">Naomakers</span>
+        <a href="/" class="wordmark">Naomakers</a>
         <span class="mono ref">Nantes · numérique · non-profit</span>
       </div>
 
@@ -55,31 +72,39 @@ const itemList = {
         </p>
       </header>
 
-      <div class="section-label">
-        <h2 class="mono">Nos projets</h2>
-        <span class="mono count">[ {count} ]</span>
-      </div>
+      <section id="projets" aria-labelledby="projets-heading">
+        <div class="section-label">
+          <h2 class="mono" id="projets-heading">Nos projets</h2>
+          <span class="mono count">[ {count} ]</span>
+        </div>
 
-      <section class="grid">
-        {
-          projects.map((project, i) => (
-            <ProjectCard project={project} index={i + 1} />
-          ))
-        }
+        <div class="grid">
+          {
+            projects.map((project, i) => (
+              <ProjectCard project={project} index={i + 1} />
+            ))
+          }
+        </div>
       </section>
 
-      <div class="section-label section-label--team">
-        <h2 class="mono">L'équipe</h2>
-        <span class="mono count">[ {teamCount} ]</span>
-      </div>
+      <section id="equipe" aria-labelledby="equipe-heading">
+        <div class="section-label section-label--team">
+          <h2 class="mono" id="equipe-heading">L'équipe</h2>
+          <span class="mono count">[ {teamCount} ]</span>
+        </div>
 
-      <p class="team-lede">
-        Le bureau de l'association, tenu bénévolement par des acteurs de
-        l'écosystème tech nantais.
-      </p>
+        <p class="team-lede">
+          Le bureau de l'association, tenu bénévolement par des acteurs de
+          l'écosystème tech nantais.
+        </p>
 
-      <section class="grid">
-        {team.map((member, i) => <TeamMember member={member} index={i + 1} />)}
+        <div class="grid">
+          {
+            team.map((member, i) => (
+              <TeamMember member={member} index={i + 1} />
+            ))
+          }
+        </div>
       </section>
     </div>
   </div>
@@ -113,6 +138,7 @@ const itemList = {
     font-weight: 700;
     font-size: var(--step-1);
     letter-spacing: -0.03em;
+    text-decoration: none;
   }
 
   .ref {
