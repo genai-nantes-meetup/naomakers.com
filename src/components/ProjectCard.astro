@@ -49,7 +49,7 @@ const num = String(index).padStart(2, '0');
         <p class="stats mono">
           {rating && (
             <span>
-              ★ {rating.value}/5 · {rating.count} avis
+              ★ {rating.value}/{rating.bestRating} · {rating.count} avis
             </span>
           )}
           {nps !== undefined && <span>NPS {nps}</span>}

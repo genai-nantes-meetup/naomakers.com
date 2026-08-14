@@ -29,7 +29,7 @@ export type Project = {
    * Rendered both as visible text on the card and as JSON-LD
    * `AggregateRating` (structured data must mirror visible content).
    */
-  rating?: { value: number; count: number };
+  rating?: { value: number; count: number; bestRating: number };
   /**
    * Net Promoter Score (-100 to 100). Not a schema.org `AggregateRating`
    * (that property expects a rating scale, not an NPS) — exposed as a
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     url: 'https://www.meetup.com/generative-ai-nantes',
     image: generativeAiNantes,
     eventType: 'EducationEvent',
-    rating: { value: 4.8, count: 234 },
+    rating: { value: 4.8, count: 234, bestRating: 5 },
   },
   {
     title: 'Gen AI Days',
