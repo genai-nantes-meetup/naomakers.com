@@ -47,7 +47,7 @@ export const projects: Project[] = [
       '54 heures pour transformer une idée en startup, du pitch du vendredi soir au jury du dimanche.',
     url: 'https://startupweekendnantes.fr',
     image: startupWeekend,
-    eventType: 'BusinessEvent',
+    eventType: 'EducationEvent',
   },
   {
     title: 'Shift, le Hackathon Gen AI',
@@ -56,7 +56,7 @@ export const projects: Project[] = [
       "48 heures pour concevoir un produit d'IA générative, entre designers, devs et product lovers.",
     url: 'https://shift-hackathon.com',
     image: shiftHackathon,
-    eventType: 'BusinessEvent',
+    eventType: 'EducationEvent',
     nps: 88,
   },
   {
@@ -66,7 +66,7 @@ export const projects: Project[] = [
       "Le meetup nantais dédié à l'IA générative et aux LLM : talks et workshops pour la communauté tech & produit.",
     url: 'https://www.meetup.com/generative-ai-nantes',
     image: generativeAiNantes,
-    eventType: 'SocialEvent',
+    eventType: 'EducationEvent',
     rating: { value: 4.8, count: 234 },
   },
   {
