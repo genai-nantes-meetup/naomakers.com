@@ -67,7 +67,7 @@ export const projects: Project[] = [
     url: 'https://www.meetup.com/generative-ai-nantes',
     image: generativeAiNantes,
     eventType: 'SocialEvent',
-    rating: { value: 4.8, count: 250 },
+    rating: { value: 4.8, count: 234 },
   },
   {
     title: 'Gen AI Days',
