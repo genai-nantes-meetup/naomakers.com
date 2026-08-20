@@ -2,12 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import TeamMember from '../components/TeamMember.astro';
+import FaqItem from '../components/FaqItem.astro';
 import { projects } from '../data/projects';
 import { team } from '../data/team';
-import { ORG_ID, projectId } from '../data/site';
+import { faq } from '../data/faq';
+import { ORG_ID, WEBPAGE_ID, WEBSITE_ID, projectId } from '../data/site';
+
+const title = 'Naomakers · association nantaise pour le numérique et la tech';
+const description =
+  "Naomakers, association à but non lucratif, promeut le numérique à Nantes et accompagne l'écosystème tech : hackathons, meetups et conférences.";
 
 const count = String(projects.length).padStart(2, '0');
 const teamCount = String(team.length).padStart(2, '0');
+const faqCount = String(faq.length).padStart(2, '0');
 
 // JSON-LD: the projects as an ItemList of recurring event series, merged
 // into BaseLayout's single @graph, so search engines and AI answer engines
@@ -15,6 +22,7 @@ const teamCount = String(team.length).padStart(2, '0');
 const itemList = {
   '@type': 'ItemList',
   name: 'Projets de Naomakers',
+  mainEntityOfPage: { '@id': WEBPAGE_ID },
   itemListElement: projects.map((project, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -52,12 +60,33 @@ const itemList = {
     },
   })),
 };
+
+// The page itself is both a WebPage and a FAQPage: one node for this URL
+// rather than a separate FAQPage node competing with it. mainEntity is
+// reserved for the Question list (Google's requirement); the ItemList above
+// stays a sibling node and points back here via mainEntityOfPage.
+const webPage = {
+  '@type': ['WebPage', 'FAQPage'],
+  '@id': WEBPAGE_ID,
+  url: 'https://naomakers.com',
+  name: title,
+  description,
+  inLanguage: 'fr-FR',
+  isPartOf: { '@id': WEBSITE_ID },
+  about: { '@id': ORG_ID },
+  primaryImageOfPage: 'https://naomakers.com/og.png',
+  mainEntity: faq.map((entry) => ({
+    '@type': 'Question',
+    name: entry.question,
+    acceptedAnswer: { '@type': 'Answer', text: entry.answer },
+  })),
+};
 ---
 
 <BaseLayout
-  title="Naomakers · association nantaise pour le numérique et la tech"
-  description="Naomakers, association à but non lucratif, promeut le numérique à Nantes et accompagne l'écosystème tech : hackathons, meetups et conférences."
-  jsonLdNodes={[itemList]}
+  title={title}
+  description={description}
+  jsonLdNodes={[itemList, webPage]}
 >
   <div class="container">
     <div class="sheet">
@@ -109,6 +138,17 @@ const itemList = {
               <TeamMember member={member} index={i + 1} />
             ))
           }
+        </div>
+      </section>
+
+      <section id="faq" aria-labelledby="faq-heading">
+        <div class="section-label section-label--team">
+          <h2 class="mono" id="faq-heading">Questions fréquentes</h2>
+          <span class="mono count">[ {faqCount} ]</span>
+        </div>
+
+        <div class="faq-list">
+          {faq.map((entry, i) => <FaqItem entry={entry} index={i + 1} />)}
         </div>
       </section>
     </div>
@@ -205,6 +245,14 @@ const itemList = {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-3);
+  }
+
+  .faq-list {
+    display: grid;
+    /* Full-width rows, not the 2×2 card grid: FAQ copy reads better as a
+       single column than split across two. */
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
   }
 
   @media (max-width: 720px) {

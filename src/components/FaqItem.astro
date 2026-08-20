@@ -1,0 +1,56 @@
+---
+import type { FaqEntry } from '../data/faq';
+
+interface Props {
+  entry: FaqEntry;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const num = String(index).padStart(2, '0');
+---
+
+<article class="faq-item">
+  <span class="idx mono" aria-hidden="true">{num}</span>
+  <div class="faq-text">
+    <h3>{entry.question}</h3>
+    <p>{entry.answer}</p>
+  </div>
+</article>
+
+<style>
+  .faq-item {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-3);
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+  }
+
+  .idx {
+    flex-shrink: 0;
+    padding: 0.15rem 0.45rem;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .faq-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+
+  .faq-text h3 {
+    margin: 0;
+    font-size: var(--step-1);
+  }
+
+  .faq-text p {
+    margin: 0;
+    max-width: 60ch;
+    color: var(--muted);
+  }
+</style>
