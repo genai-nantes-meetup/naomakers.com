@@ -1,3 +1,26 @@
+# AI crawlers explicitly allowed for indexing and citation (the wildcard
+# below already lets them through, but a bot with its own group ignores the
+# wildcard entirely once one exists — so if a Disallow is ever added under
+# `User-agent: *`, it will NOT apply to any of these five without a matching
+# rule of their own).
+
+# Training / indexing for AI answer engines
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Live search / on-demand citation
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 User-agent: *
 Allow: /
 
