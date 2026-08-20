@@ -124,7 +124,7 @@ const webPage = {
         <div class="grid">
           {
             projects.map((project, i) => (
-              <ProjectCard project={project} index={i + 1} />
+              <ProjectCard project={project} index={i + 1} priority={i === 0} />
             ))
           }
         </div>

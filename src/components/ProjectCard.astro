@@ -5,9 +5,11 @@ import type { Project } from '../data/projects';
 interface Props {
   project: Project;
   index: number;
+  /** True for the card above the fold, so its image loads eagerly (LCP). */
+  priority?: boolean;
 }
 
-const { project, index } = Astro.props;
+const { project, index, priority = false } = Astro.props;
 const { title, kind, description, url, image, imageAlt, wip, rating, stats } =
   project;
 
@@ -55,6 +57,7 @@ const specs: { label: string; value: string }[] = [
           alt={imageAlt ?? `Visuel du projet ${title}`}
           widths={[400, 800]}
           sizes="(max-width: 760px) 100vw, 520px"
+          priority={priority}
         />
       ) : (
         <div class="hatch" aria-hidden="true" />
