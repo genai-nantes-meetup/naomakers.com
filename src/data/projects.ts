@@ -32,6 +32,12 @@ export type Project = {
   url?: string;
   /** Local cover image. When absent, the card renders a blueprint hatch. */
   image?: ImageMetadata;
+  /**
+   * Alt text describing what the cover image actually shows (a scene, not
+   * a restatement of `title`, which already sits right below it in the
+   * card). Falls back to a generic caption when a project has no image.
+   */
+  imageAlt?: string;
   /** Marks a work-in-progress project (renders a "Bientôt" tag). */
   wip?: boolean;
   /**
@@ -62,7 +68,13 @@ export const projects: Project[] = [
       '54 heures pour transformer une idée en startup, du pitch du vendredi soir au jury du dimanche.',
     url: 'https://startupweekendnantes.fr',
     image: startupWeekend,
+    imageAlt:
+      'Illustration de quatre participants penchés sur un ordinateur portable, badges au cou, en pleine session de travail.',
     eventType: 'EducationEvent',
+    stats: [
+      { label: 'Projets par édition', value: 14 },
+      { label: 'Participants', value: 100 },
+    ],
   },
   {
     slug: 'shift-hackathon',
@@ -72,8 +84,15 @@ export const projects: Project[] = [
       "48 heures pour concevoir un produit d'IA générative, entre designers, devs et product lovers.",
     url: 'https://shift-hackathon.com',
     image: shiftHackathon,
+    imageAlt:
+      'Bannière du hackathon Shift : écran affichant un tableau Notion, silhouettes de participants, dates du 27 au 29 mars 2026.',
     eventType: 'EducationEvent',
-    stats: [{ label: 'NPS', value: 88 }],
+    stats: [
+      { label: 'NPS', value: 88 },
+      { label: 'Édition', value: '3ᵉ en 2026' },
+      { label: 'Projets par édition', value: 14 },
+      { label: 'Participants', value: 100 },
+    ],
   },
   {
     slug: 'generative-ai-nantes',
@@ -83,8 +102,16 @@ export const projects: Project[] = [
       "Le meetup nantais dédié à l'IA générative et aux LLM : talks et workshops pour la communauté tech & produit.",
     url: 'https://www.meetup.com/generative-ai-nantes',
     image: generativeAiNantes,
+    imageAlt:
+      'Visuel abstrait aux tons sombres avec le sigle « AI » lumineux entouré de particules et de cercles techniques.',
     eventType: 'EducationEvent',
     rating: { value: 4.8, count: 234, bestRating: 5 },
+    stats: [
+      // U+202F (narrow no-break space): the French thousands separator must
+      // never wrap at the end of a line inside a narrow spec-sheet cell.
+      { label: 'Membres', value: '~1 500' },
+      { label: 'Événements', value: 50 },
+    ],
   },
   {
     slug: 'genai-days-nantes',
@@ -94,6 +121,8 @@ export const projects: Project[] = [
       "La conférence nationale sur l'IA générative à Nantes : talks et rencontres pour la communauté tech, produit et business autour des LLM et de la Gen AI.",
     url: 'https://genai-days-nantes.com',
     image: genAiDays,
+    imageAlt:
+      "Illustration futuriste d'un immense bâtiment en forme de tête d'éléphant dominant la skyline de Nantes au crépuscule.",
     eventType: 'EducationEvent',
   },
 ];
