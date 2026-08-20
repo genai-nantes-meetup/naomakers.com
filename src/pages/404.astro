@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page introuvable · Naomakers"
+  description="Cette page n'existe pas. Retour à l'accueil de Naomakers, association nantaise pour le numérique, la tech et l'IA."
+  noindex
+>
+  <div class="container">
+    <div class="sheet">
+      <p class="eyebrow mono">Erreur 404</p>
+      <h1>Cette page n'existe pas.</h1>
+      <p class="lede">Le lien est peut-être cassé ou la page a été déplacée.</p>
+      <a class="back mono" href="/">Retour à l'accueil →</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .sheet {
+    margin-top: var(--space-6);
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+    padding: clamp(var(--space-3), 4vw, var(--space-6));
+  }
+
+  .eyebrow {
+    display: inline-block;
+    margin: 0 0 var(--space-3);
+    padding: 0.3rem 0.6rem;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, var(--step-3));
+  }
+
+  .lede {
+    max-width: 40rem;
+    margin: var(--space-3) 0 var(--space-4);
+    color: var(--muted);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

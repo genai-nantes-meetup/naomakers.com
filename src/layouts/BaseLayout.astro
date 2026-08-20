@@ -9,9 +9,11 @@ interface Props {
   description: string;
   /** Extra JSON-LD nodes merged into the single page-wide `@graph`. */
   jsonLdNodes?: Record<string, unknown>[];
+  /** Error pages (404): drop the canonical and set noindex, follow. */
+  noindex?: boolean;
 }
 
-const { title, description, jsonLdNodes = [] } = Astro.props;
+const { title, description, jsonLdNodes = [], noindex = false } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
@@ -153,11 +155,13 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <meta name="description" content={description} />
     <meta
       name="robots"
-      content="index, follow, max-image-preview:large, max-snippet:-1"
+      content={noindex
+        ? 'noindex, follow'
+        : 'index, follow, max-image-preview:large, max-snippet:-1'}
     />
     <meta name="author" content="Naomakers" />
     <meta name="theme-color" content="#fbfbf7" />
-    <link rel="canonical" href={canonicalURL.href} />
+    {!noindex && <link rel="canonical" href={canonicalURL.href} />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
