@@ -1,0 +1,25 @@
+---
+import { PUBLIC_POSTHOG_KEY } from 'astro:env/client';
+import { buildPostHogSnippet, POSTHOG_API_HOST } from '../lib/posthog-snippet';
+
+// Analytics only ships in production builds: `astro dev` renders neither
+// tag below, so local browsing never hits the proxy and never pollutes the
+// PostHog project. `import.meta.env.PROD` is resolved at build time, so
+// `astro preview` (which serves the already-built `dist/`) reflects
+// whatever was true at build time, not at preview time.
+const snippet =
+  import.meta.env.PROD && PUBLIC_POSTHOG_KEY
+    ? buildPostHogSnippet(PUBLIC_POSTHOG_KEY)
+    : null;
+---
+
+{snippet && <link rel="preconnect" href={POSTHOG_API_HOST} crossorigin />}
+{
+  /* `is:inline` is required: a processed <script> is bundled by Vite and
+     re-emitted as a deferred `type="module"`, but the array-loader must run
+     synchronously while the head is still parsing. `set:html` is the only
+     way to interpolate the frontmatter-built snippet into the script's
+     content, since braces inside a <script> are raw text to the Astro
+     compiler, not an expression slot. */
+}
+{snippet && <script is:inline set:html={snippet} />}

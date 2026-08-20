@@ -9,6 +9,7 @@ import { SITE, ORG_ID, WEBSITE_ID, personId, projectId } from '../data/site';
 import { team } from '../data/team';
 import { projects } from '../data/projects';
 import { association } from '../data/association';
+import Analytics from '../components/Analytics.astro';
 
 interface Props {
   title: string;
@@ -181,6 +182,8 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <title>{title}</title>
 
     <script type="application/ld+json" set:html={jsonLdText} is:inline />
+
+    <Analytics />
   </head>
   <body>
     <slot />
@@ -203,7 +206,8 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
               >{association.foundingYear}<a
                 class="contact-dot"
                 href={`mailto:${association.email}`}
-                aria-label="Nous contacter">✉</a
+                aria-label="Nous contacter"
+                data-analytics-event="contact_email_clicked">✉</a
               ></span
             >
           </div>
@@ -215,7 +219,8 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
               target="_blank"
               rel="noopener"
               aria-label="Voir les statuts de l'association"
-              >Association loi 1901</a
+              data-analytics-event="legal_document_opened"
+              data-analytics-document="statutes">Association loi 1901</a
             >
           </div>
           <div class="field">
@@ -226,7 +231,8 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
               target="_blank"
               rel="noopener"
               aria-label="Voir la fiche Pappers de l'association"
-              >{association.siretDisplay}</a
+              data-analytics-event="legal_document_opened"
+              data-analytics-document="pappers">{association.siretDisplay}</a
             >
           </div>
           <div class="field">
@@ -236,6 +242,47 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         </div>
       </div>
     </footer>
+
+    <script>
+      import { capture } from '../lib/analytics';
+
+      // One delegated listener for the whole document rather than one per
+      // component: markup opts in by declaring `data-analytics-event`, and
+      // any sibling `data-analytics-*` attribute becomes an event property
+      // (`data-analytics-project` -> `project`). Click also fires on
+      // keyboard activation of links, so no extra key handling is needed.
+      //
+      // This script is always present, even in dev/CI builds where the
+      // PostHog snippet isn't emitted: `capture()` is then a silent no-op,
+      // which keeps the click-handling code itself testable outside prod.
+      document.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element)) return;
+
+        const trigger = event.target.closest<HTMLElement>(
+          '[data-analytics-event]',
+        );
+        const name = trigger?.dataset.analyticsEvent;
+        if (!trigger || !name) return;
+
+        const properties: Record<string, string> = {};
+        for (const [key, value] of Object.entries(trigger.dataset)) {
+          if (
+            key === 'analyticsEvent' ||
+            !key.startsWith('analytics') ||
+            value === undefined
+          ) {
+            continue;
+          }
+          const property = key
+            .slice('analytics'.length)
+            .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+            .toLowerCase();
+          properties[property] = value;
+        }
+
+        capture(name, properties);
+      });
+    </script>
 
     <style>
       .footer {

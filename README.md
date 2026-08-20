@@ -23,6 +23,33 @@ npm run build    # build the static site into dist/
 npm run preview  # preview the production build locally
 ```
 
+## Analytics
+
+Production loads [PostHog](https://posthog.com) behind the reverse proxy
+`hogpost.naomakers.com` (managed proxy pointing at PostHog Cloud US). It is
+built with the array-loader snippet, not the `posthog-js` npm package, and
+only ships in production builds — `astro dev` and PR/CI builds emit nothing.
+
+- **Token**: `PUBLIC_POSTHOG_KEY` env var (see `.env.example`), declared as
+  an optional client schema entry in `astro.config.mjs` so a token-less
+  build (GitHub Actions has no Vercel environment variables) still passes.
+  Set the real value in Vercel → Project Settings → Environment Variables,
+  **Production** scope only.
+- **Config**: `autocapture: true`, `persistence: 'cookie'`,
+  `api_host`/`ui_host` both set to the proxy. Super properties registered
+  at init: `site: 'naomakers.com'`, `environment: 'production'`.
+- **Custom events**: `object_action` snake_case naming
+  (e.g. `project_card_clicked`). Application code never touches
+  `window.posthog` — it calls `capture()` from `src/lib/analytics.ts`.
+  Markup opts elements into tracking declaratively via
+  `data-analytics-event` (+ optional `data-analytics-*` properties), picked
+  up by a single delegated click listener in `src/layouts/BaseLayout.astro`.
+- **CSP**: the site has none today. If one is ever added, `script-src` and
+  `connect-src` need `https://hogpost.naomakers.com` plus `'unsafe-inline'`
+  (both the JSON-LD block and the PostHog snippet are inline scripts).
+- **CI**: `.lycheeignore` excludes the proxy host, since the
+  `<link rel="preconnect">` it emits isn't a browsable page.
+
 ## Deployment
 
 Production is hosted on **Vercel** (Git integration builds each push).
