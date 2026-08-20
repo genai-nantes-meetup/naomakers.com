@@ -5,6 +5,20 @@ import shiftHackathon from '../assets/shift-hackathon.webp';
 import generativeAiNantes from '../assets/generative-ai-nantes.webp';
 import genAiDays from '../assets/genai-days-nantes.jpg';
 
+/**
+ * A citable figure shown on the card and mirrored into JSON-LD as an
+ * `additionalProperty` (schema.org PropertyValue). `label` is both the
+ * visible caption and the PropertyValue `name`, `value` is rendered as-is
+ * and reused as the PropertyValue `value`, so visible and structured data
+ * cannot drift apart by construction. `value` accepts a string for
+ * approximate or ordinal figures ("~1 500", "3ᵉ en 2026"): PropertyValue.value
+ * takes Text or Number.
+ */
+export type ProjectStat = {
+  label: string;
+  value: string | number;
+};
+
 export type Project = {
   /** Stable slug used to build this project's schema.org `@id`. */
   slug: string;
@@ -29,15 +43,13 @@ export type Project = {
   /**
    * Average satisfaction rating out of 5, from a genuine third-party survey.
    * Rendered both as visible text on the card and as JSON-LD
-   * `AggregateRating` (structured data must mirror visible content).
+   * `AggregateRating` (structured data must mirror visible content). Kept
+   * separate from `stats`: it is the only figure with a first-class
+   * schema.org property (and SERP treatment) of its own.
    */
   rating?: { value: number; count: number; bestRating: number };
-  /**
-   * Net Promoter Score (-100 to 100). Not a schema.org `AggregateRating`
-   * (that property expects a rating scale, not an NPS) — exposed as a
-   * generic `additionalProperty` (PropertyValue) instead.
-   */
-  nps?: number;
+  /** Cap at 4 entries — the card layout is a 2-column grid. */
+  stats?: ProjectStat[];
 };
 
 /** All projects run by the naomakers association, in display order. */
@@ -61,7 +73,7 @@ export const projects: Project[] = [
     url: 'https://shift-hackathon.com',
     image: shiftHackathon,
     eventType: 'EducationEvent',
-    nps: 88,
+    stats: [{ label: 'NPS', value: 88 }],
   },
   {
     slug: 'generative-ai-nantes',

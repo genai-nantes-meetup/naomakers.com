@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { project, index } = Astro.props;
-const { title, kind, description, url, image, wip, rating, nps } = project;
+const { title, kind, description, url, image, wip, rating, stats } = project;
 
 // Upcoming projects have no external link and render as a plain card.
 const Tag = url ? 'a' : 'div';
@@ -45,14 +45,18 @@ const num = String(index).padStart(2, '0');
     <h3>{title}</h3>
     <p>{description}</p>
     {
-      (rating || nps !== undefined) && (
+      (rating || stats?.length) && (
         <p class="stats mono">
           {rating && (
             <span>
               ★ {rating.value}/{rating.bestRating} · {rating.count} avis
             </span>
           )}
-          {nps !== undefined && <span>NPS {nps}</span>}
+          {stats?.map((stat) => (
+            <span>
+              {stat.label} {stat.value}
+            </span>
+          ))}
         </p>
       )
     }

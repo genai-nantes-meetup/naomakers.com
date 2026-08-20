@@ -37,13 +37,13 @@ const itemList = {
             },
           }
         : {}),
-      ...(project.nps !== undefined
+      ...(project.stats?.length
         ? {
-            additionalProperty: {
+            additionalProperty: project.stats.map((stat) => ({
               '@type': 'PropertyValue',
-              name: 'Net Promoter Score',
-              value: project.nps,
-            },
+              name: stat.label,
+              value: stat.value,
+            })),
           }
         : {}),
     },
