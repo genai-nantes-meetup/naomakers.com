@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
-import { ORG_ID, WEBSITE_ID, personId } from '../data/site';
+import { ORG_ID, WEBSITE_ID, personId, projectId } from '../data/site';
 import { team } from '../data/team';
+import { projects } from '../data/projects';
 
 interface Props {
   title: string;
@@ -44,16 +45,20 @@ const jsonLd = {
       '@type': 'NGO',
       '@id': ORG_ID,
       name: 'Naomakers',
+      legalName: 'NAOMAKERS',
       url: 'https://naomakers.com',
       email: 'team@naomakers.com',
       description: orgDescription,
       image: ogImage.href,
       foundingDate: '2018',
+      foundingLocation: { '@type': 'Place', name: 'Nantes, France' },
       slogan: 'On fait rayonner le numérique et la tech, à Nantes.',
       areaServed: 'Nantes',
       knowsAbout: [
         'Intelligence artificielle générative',
+        'Grands modèles de langage (LLM)',
         'Hackathons',
+        'Meetups tech',
         'Entrepreneuriat tech',
         'Écosystème numérique nantais',
       ],
@@ -62,6 +67,8 @@ const jsonLd = {
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Nantes',
+          addressRegion: 'Pays de la Loire',
+          postalCode: '44000',
           addressCountry: 'FR',
         },
       },
@@ -72,12 +79,52 @@ const jsonLd = {
         areaServed: 'FR',
         availableLanguage: ['French'],
       },
+      // Registries that identify this exact legal entity — not the project
+      // sites, which are separate organizations naomakers.com merely hubs to.
       sameAs: [
-        'https://www.meetup.com/generative-ai-nantes',
-        'https://startupweekendnantes.fr',
-        'https://shift-hackathon.com',
+        'https://www.pappers.fr/entreprise/naomakers-901264374',
+        'https://annuaire-entreprises.data.gouv.fr/entreprise/901264374',
+      ],
+      // SIRET/SIREN are French registration numbers, not tax IDs (taxID
+      // expects a fiscal/VAT number, which a non-profit typically has none
+      // of) — exposed generically via `identifier`.
+      identifier: [
+        {
+          '@type': 'PropertyValue',
+          propertyID: 'SIRET',
+          name: 'Numéro SIRET',
+          value: '90126437400025',
+        },
+        {
+          '@type': 'PropertyValue',
+          propertyID: 'SIREN',
+          name: 'Numéro SIREN',
+          value: '901264374',
+        },
+        {
+          '@type': 'PropertyValue',
+          propertyID: 'RNA',
+          name: 'Numéro RNA (répertoire national des associations)',
+          value: 'W442026186',
+        },
+      ],
+      // schema.org's `nonprofitStatus` enum only covers US and NL statuses;
+      // a French "loi 1901" status has no matching value, so it is stated
+      // as plain text instead of forcing an invalid enum member.
+      additionalProperty: [
+        {
+          '@type': 'PropertyValue',
+          name: 'Statut juridique',
+          value: 'Association loi 1901 à but non lucratif',
+        },
+        {
+          '@type': 'PropertyValue',
+          name: "Pays d'immatriculation",
+          value: 'France',
+        },
       ],
       member: team.map((member) => ({ '@id': personId(member.slug) })),
+      events: projects.map((project) => ({ '@id': projectId(project.slug) })),
     },
     {
       '@type': 'WebSite',
