@@ -6,6 +6,8 @@ import generativeAiNantes from '../assets/generative-ai-nantes.webp';
 import genAiDays from '../assets/genai-days-nantes.jpg';
 
 export type Project = {
+  /** Stable slug used to build this project's schema.org `@id`. */
+  slug: string;
   /** Displayed project name. */
   title: string;
   /** Monospace category label shown in the card header. */
@@ -41,6 +43,7 @@ export type Project = {
 /** All projects run by the naomakers association, in display order. */
 export const projects: Project[] = [
   {
+    slug: 'startup-weekend-nantes',
     title: 'Startup Weekend Nantes',
     kind: 'Hackathon · 54h',
     description:
@@ -50,6 +53,7 @@ export const projects: Project[] = [
     eventType: 'EducationEvent',
   },
   {
+    slug: 'shift-hackathon',
     title: 'Shift, le Hackathon Gen AI',
     kind: 'Hackathon · 48h · Gen AI',
     description:
@@ -60,6 +64,7 @@ export const projects: Project[] = [
     nps: 88,
   },
   {
+    slug: 'generative-ai-nantes',
     title: 'Generative AI Nantes',
     kind: 'Meetup · Communauté',
     description:
@@ -70,6 +75,7 @@ export const projects: Project[] = [
     rating: { value: 4.8, count: 234, bestRating: 5 },
   },
   {
+    slug: 'genai-days-nantes',
     title: 'Gen AI Days',
     kind: 'Conférence',
     description:

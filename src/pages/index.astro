@@ -4,6 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import TeamMember from '../components/TeamMember.astro';
 import { projects } from '../data/projects';
 import { team } from '../data/team';
+import { ORG_ID } from '../data/site';
 
 const count = String(projects.length).padStart(2, '0');
 const teamCount = String(team.length).padStart(2, '0');
@@ -24,7 +25,7 @@ const itemList = {
       name: project.title,
       description: project.description,
       ...(project.url ? { url: project.url } : {}),
-      organizer: { '@id': 'https://naomakers.com/#organization' },
+      organizer: { '@id': ORG_ID },
       location: { '@type': 'Place', name: 'Nantes, France' },
       ...(project.rating
         ? {

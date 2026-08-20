@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ORG_ID, WEBSITE_ID } from '../data/site';
 
 interface Props {
   title: string;
@@ -23,7 +24,7 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'NGO',
-      '@id': 'https://naomakers.com/#organization',
+      '@id': ORG_ID,
       name: 'Naomakers',
       url: 'https://naomakers.com',
       email: 'team@naomakers.com',
@@ -61,11 +62,11 @@ const jsonLd = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://naomakers.com/#website',
+      '@id': WEBSITE_ID,
       name: 'Naomakers',
       url: 'https://naomakers.com',
       inLanguage: 'fr-FR',
-      publisher: { '@id': 'https://naomakers.com/#organization' },
+      publisher: { '@id': ORG_ID },
     },
   ],
 };
