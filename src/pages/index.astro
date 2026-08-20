@@ -92,11 +92,17 @@ const webPage = {
     <div class="sheet">
       <div class="topbar">
         <a href="/" class="wordmark">Naomakers</a>
-        <span class="mono ref">Nantes · numérique · non-profit</span>
+        <nav class="nav mono" aria-label="Sections de la page">
+          <a href="#projets">Projets</a>
+          <a href="#equipe">Équipe</a>
+          <a href="#faq">FAQ</a>
+        </nav>
       </div>
 
       <header class="hero">
-        <p class="eyebrow mono">Association à but non lucratif · Nantes</p>
+        <p class="eyebrow mono">
+          Association loi 1901 · Nantes · numérique, tech &amp; IA
+        </p>
         <h1>
           L'association qui fait rayonner<br />le numérique, la tech et l'IA, à
           Nantes.
@@ -183,8 +189,29 @@ const webPage = {
     text-decoration: none;
   }
 
-  .ref {
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .nav a {
+    /* WCAG 2.2 AA target size (DESIGN.md): the mono face sits at
+       --step--1 (0.8rem), so the tap target needs an explicit floor. */
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
     color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    transition:
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+
+  .nav a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
   }
 
   .hero {
