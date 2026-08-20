@@ -1,8 +1,9 @@
 ---
 import '../styles/global.css';
-import { ORG_ID, WEBSITE_ID, personId, projectId } from '../data/site';
+import { SITE, ORG_ID, WEBSITE_ID, personId, projectId } from '../data/site';
 import { team } from '../data/team';
 import { projects } from '../data/projects';
+import { association } from '../data/association';
 
 interface Props {
   title: string;
@@ -17,11 +18,6 @@ const { title, description, jsonLdNodes = [], noindex = false } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
-
-// Association description reused for meta and structured data. Kept broad on
-// purpose: Naomakers promotes the whole digital/tech ecosystem, not only Gen AI.
-const orgDescription =
-  "Naomakers est une association à but non lucratif qui promeut le secteur du numérique sur le territoire nantais et accompagne les personnes et les acteurs de l'écosystème technologique à travers hackathons, meetups et conférences.";
 
 // The bureau as Person nodes, linked to the NGO via memberOf (not employee:
 // they are volunteers, not staff) and referenced back from the NGO's own
@@ -46,48 +42,37 @@ const jsonLd = {
     {
       '@type': 'NGO',
       '@id': ORG_ID,
-      name: 'Naomakers',
-      legalName: 'NAOMAKERS',
-      url: 'https://naomakers.com',
-      email: 'team@naomakers.com',
-      description: orgDescription,
+      name: association.name,
+      legalName: association.legalName,
+      url: SITE,
+      email: association.email,
+      description: association.description,
       image: ogImage.href,
-      foundingDate: '2018',
+      foundingDate: association.foundingYear,
       foundingLocation: { '@type': 'Place', name: 'Nantes, France' },
-      slogan:
-        "L'association qui fait rayonner le numérique, la tech et l'IA, à Nantes.",
-      areaServed: 'Nantes',
-      knowsAbout: [
-        'Intelligence artificielle générative',
-        'Grands modèles de langage (LLM)',
-        'Hackathons',
-        'Meetups tech',
-        'Entrepreneuriat tech',
-        'Écosystème numérique nantais',
-      ],
+      slogan: association.slogan,
+      areaServed: association.areaServed,
+      knowsAbout: association.knowsAbout,
       location: {
         '@type': 'Place',
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Nantes',
-          addressRegion: 'Pays de la Loire',
-          postalCode: '44000',
+          addressRegion: association.addressRegion,
+          postalCode: association.postalCode,
           addressCountry: 'FR',
         },
       },
       contactPoint: {
         '@type': 'ContactPoint',
-        email: 'team@naomakers.com',
+        email: association.email,
         contactType: 'customer support',
         areaServed: 'FR',
         availableLanguage: ['French'],
       },
       // Registries that identify this exact legal entity — not the project
       // sites, which are separate organizations naomakers.com merely hubs to.
-      sameAs: [
-        'https://www.pappers.fr/entreprise/naomakers-901264374',
-        'https://annuaire-entreprises.data.gouv.fr/entreprise/901264374',
-      ],
+      sameAs: [association.pappersUrl, association.dataGouvUrl],
       // SIRET/SIREN are French registration numbers, not tax IDs (taxID
       // expects a fiscal/VAT number, which a non-profit typically has none
       // of) — exposed generically via `identifier`.
@@ -96,19 +81,19 @@ const jsonLd = {
           '@type': 'PropertyValue',
           propertyID: 'SIRET',
           name: 'Numéro SIRET',
-          value: '90126437400025',
+          value: association.siretDigits,
         },
         {
           '@type': 'PropertyValue',
           propertyID: 'SIREN',
           name: 'Numéro SIREN',
-          value: '901264374',
+          value: association.siren,
         },
         {
           '@type': 'PropertyValue',
           propertyID: 'RNA',
           name: 'Numéro RNA (répertoire national des associations)',
-          value: 'W442026186',
+          value: association.rna,
         },
       ],
       // schema.org's `nonprofitStatus` enum only covers US and NL statuses;
@@ -118,7 +103,7 @@ const jsonLd = {
         {
           '@type': 'PropertyValue',
           name: 'Statut juridique',
-          value: 'Association loi 1901 à but non lucratif',
+          value: association.legalStatus,
         },
         {
           '@type': 'PropertyValue',
@@ -132,8 +117,8 @@ const jsonLd = {
     {
       '@type': 'WebSite',
       '@id': WEBSITE_ID,
-      name: 'Naomakers',
-      url: 'https://naomakers.com',
+      name: association.name,
+      url: SITE,
       inLanguage: 'fr-FR',
       publisher: { '@id': ORG_ID },
     },
@@ -206,7 +191,7 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <div class="titleblock">
           <div class="field">
             <span class="mono label">Organisation</span>
-            <span class="value">Naomakers</span>
+            <span class="value">{association.name}</span>
           </div>
           <div class="field">
             <span class="mono label">Localisation</span>
@@ -216,9 +201,9 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             <span class="mono label">Depuis</span>
             <!-- Discreet contact: the "·" is a mailto to team@naomakers.com -->
             <span class="value"
-              >2018<a
+              >{association.foundingYear}<a
                 class="contact-dot"
-                href="mailto:team@naomakers.com"
+                href={`mailto:${association.email}`}
                 aria-label="Nous contacter">✉</a
               ></span
             >
@@ -227,7 +212,7 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             <span class="mono label">Statut</span>
             <a
               class="value value-link"
-              href="https://drive.google.com/file/d/1cl5sOdBnbweNvQ-F714bRpftWKmOZHVm/view?usp=sharing"
+              href={association.statutesUrl}
               target="_blank"
               rel="noopener"
               aria-label="Voir les statuts de l'association"
@@ -238,16 +223,16 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             <span class="mono label">SIRET</span>
             <a
               class="value value-link"
-              href="https://www.pappers.fr/entreprise/naomakers-901264374"
+              href={association.pappersUrl}
               target="_blank"
               rel="noopener"
               aria-label="Voir la fiche Pappers de l'association"
-              >901 264 374 00025</a
+              >{association.siretDisplay}</a
             >
           </div>
           <div class="field">
             <span class="mono label">ID association</span>
-            <span class="value">W442026186</span>
+            <span class="value">{association.rna}</span>
           </div>
         </div>
       </div>
