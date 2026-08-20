@@ -97,6 +97,12 @@ h3 {
   outline-offset: 3px;
 }
 
+/* Keeps anchor-linked sections clear of the viewport edge when the topbar
+   nav (or any future fixed chrome) scrolls them into view. */
+:target {
+  scroll-margin-top: var(--space-4);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

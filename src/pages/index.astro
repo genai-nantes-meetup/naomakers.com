@@ -2,18 +2,27 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import TeamMember from '../components/TeamMember.astro';
+import FaqItem from '../components/FaqItem.astro';
 import { projects } from '../data/projects';
 import { team } from '../data/team';
+import { faq } from '../data/faq';
+import { ORG_ID, WEBPAGE_ID, WEBSITE_ID, projectId } from '../data/site';
+
+const title = 'Naomakers · association numérique, tech et IA à Nantes';
+const description =
+  "Naomakers, association à but non lucratif, promeut le numérique, la tech et l'IA générative à Nantes et accompagne l'écosystème tech : hackathons, meetups et conférences.";
 
 const count = String(projects.length).padStart(2, '0');
 const teamCount = String(team.length).padStart(2, '0');
+const faqCount = String(faq.length).padStart(2, '0');
 
-// JSON-LD: the projects as an ItemList of recurring event series, so search
-// engines and AI answer engines can enumerate what Naomakers runs.
+// JSON-LD: the projects as an ItemList of recurring event series, merged
+// into BaseLayout's single @graph, so search engines and AI answer engines
+// can enumerate what Naomakers runs.
 const itemList = {
-  '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Projets de Naomakers',
+  mainEntityOfPage: { '@id': WEBPAGE_ID },
   itemListElement: projects.map((project, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -21,10 +30,13 @@ const itemList = {
       '@type': project.eventType
         ? ['EventSeries', project.eventType]
         : 'EventSeries',
+      // Referenced from the NGO's `events` list, so the project needs a
+      // stable @id to resolve against, not just an inline object.
+      '@id': projectId(project.slug),
       name: project.title,
       description: project.description,
       ...(project.url ? { url: project.url } : {}),
-      organizer: { '@id': 'https://naomakers.com/#organization' },
+      organizer: { '@id': ORG_ID },
       location: { '@type': 'Place', name: 'Nantes, France' },
       ...(project.rating
         ? {
@@ -36,34 +48,65 @@ const itemList = {
             },
           }
         : {}),
-      ...(project.nps !== undefined
+      ...(project.stats?.length
         ? {
-            additionalProperty: {
+            additionalProperty: project.stats.map((stat) => ({
               '@type': 'PropertyValue',
-              name: 'Net Promoter Score',
-              value: project.nps,
-            },
+              name: stat.label,
+              value: stat.value,
+            })),
           }
         : {}),
     },
   })),
 };
+
+// The page itself is both a WebPage and a FAQPage: one node for this URL
+// rather than a separate FAQPage node competing with it. mainEntity is
+// reserved for the Question list (Google's requirement); the ItemList above
+// stays a sibling node and points back here via mainEntityOfPage.
+const webPage = {
+  '@type': ['WebPage', 'FAQPage'],
+  '@id': WEBPAGE_ID,
+  url: 'https://naomakers.com',
+  name: title,
+  description,
+  inLanguage: 'fr-FR',
+  isPartOf: { '@id': WEBSITE_ID },
+  about: { '@id': ORG_ID },
+  primaryImageOfPage: 'https://naomakers.com/og.png',
+  mainEntity: faq.map((entry) => ({
+    '@type': 'Question',
+    name: entry.question,
+    acceptedAnswer: { '@type': 'Answer', text: entry.answer },
+  })),
+};
 ---
 
 <BaseLayout
-  title="Naomakers · association nantaise pour le numérique et la tech"
-  description="Naomakers, association à but non lucratif, promeut le numérique à Nantes et accompagne l'écosystème tech : hackathons, meetups et conférences."
+  title={title}
+  description={description}
+  jsonLdNodes={[itemList, webPage]}
 >
   <div class="container">
     <div class="sheet">
       <div class="topbar">
         <a href="/" class="wordmark">Naomakers</a>
-        <span class="mono ref">Nantes · numérique · non-profit</span>
+        <nav class="nav mono" aria-label="Sections de la page">
+          <a href="#projets">Projets</a>
+          <a href="#equipe">Équipe</a>
+          <a href="#faq">FAQ</a>
+        </nav>
       </div>
 
       <header class="hero">
-        <p class="eyebrow mono">Association à but non lucratif · Nantes</p>
-        <h1>On fait rayonner le numérique<br />et la tech, à Nantes.</h1>
+        <p class="eyebrow mono">
+          Association loi 1901 · Nantes · numérique, tech &amp; IA
+        </p>
+        <h1>
+          L'association qui fait rayonner<br />le numérique, la tech et l'IA, à
+          Nantes.
+        </h1>
         <p class="lede">
           Naomakers promeut le secteur du numérique sur le territoire nantais et
           accompagne les personnes comme les acteurs de l'écosystème
@@ -81,7 +124,7 @@ const itemList = {
         <div class="grid">
           {
             projects.map((project, i) => (
-              <ProjectCard project={project} index={i + 1} />
+              <ProjectCard project={project} index={i + 1} priority={i === 0} />
             ))
           }
         </div>
@@ -106,14 +149,19 @@ const itemList = {
           }
         </div>
       </section>
+
+      <section id="faq" aria-labelledby="faq-heading">
+        <div class="section-label section-label--team">
+          <h2 class="mono" id="faq-heading">Questions fréquentes</h2>
+          <span class="mono count">[ {faqCount} ]</span>
+        </div>
+
+        <div class="faq-list">
+          {faq.map((entry, i) => <FaqItem entry={entry} index={i + 1} />)}
+        </div>
+      </section>
     </div>
   </div>
-
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(itemList)}
-    is:inline
-  />
 </BaseLayout>
 
 <style>
@@ -141,8 +189,29 @@ const itemList = {
     text-decoration: none;
   }
 
-  .ref {
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .nav a {
+    /* WCAG 2.2 AA target size (DESIGN.md): the mono face sits at
+       --step--1 (0.8rem), so the tap target needs an explicit floor. */
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
     color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    transition:
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+
+  .nav a:hover {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
   }
 
   .hero {
@@ -206,6 +275,14 @@ const itemList = {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-3);
+  }
+
+  .faq-list {
+    display: grid;
+    /* Full-width rows, not the 2×2 card grid: FAQ copy reads better as a
+       single column than split across two. */
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
   }
 
   @media (max-width: 720px) {

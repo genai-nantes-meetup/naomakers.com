@@ -64,9 +64,13 @@ it is always a fill with ink on top.
 - **Layout:** engineering-sheet frame (ink-bordered white panel on a blueprint
   grid ground), asymmetric hero, ruled section label with a `[ 04 ]` count, a
   deliberate 2×2 card grid (1 col on mobile). Breaks the centered-column reflex.
+  The topbar carries a mono nav linking to `#projets`/`#equipe`/`#faq`; the FAQ
+  section itself is a single-column list, not the 2×2 card grid.
 - **Components:** cards specified across rest/hover/focus; full-card links with
   `target=_blank rel=noopener`; WIP card renders a diagonal hatch placeholder +
-  ink "Bientôt" tag instead of an image.
+  ink "Bientôt" tag instead of an image. Project cards can carry a spec-sheet
+  stat table (`dl`/`dt`/`dd`, filet-ruled 2-column grid) below the description,
+  pinned to the bottom of the card so 0/2/4-stat cards stay aligned.
 - **Imagery:** the three real event visuals are unified with a light rest-state
   desaturation that resolves to full color on hover (art direction as a system).
 - **Iconography:** monospace arrows (`→ ↗`) and rules rather than a default icon
