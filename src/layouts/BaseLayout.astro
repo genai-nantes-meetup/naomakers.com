@@ -5,9 +5,11 @@ import { ORG_ID, WEBSITE_ID } from '../data/site';
 interface Props {
   title: string;
   description: string;
+  /** Extra JSON-LD nodes merged into the single page-wide `@graph`. */
+  jsonLdNodes?: Record<string, unknown>[];
 }
 
-const { title, description } = Astro.props;
+const { title, description, jsonLdNodes = [] } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
@@ -68,8 +70,13 @@ const jsonLd = {
       inLanguage: 'fr-FR',
       publisher: { '@id': ORG_ID },
     },
+    ...jsonLdNodes,
   ],
 };
+
+// A stray "</script>" inside any node (e.g. FAQ copy) would terminate the
+// script element early and break the page; escape "<" defensively.
+const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -119,11 +126,7 @@ const jsonLd = {
     />
     <title>{title}</title>
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(jsonLd)}
-      is:inline
-    />
+    <script type="application/ld+json" set:html={jsonLdText} is:inline />
   </head>
   <body>
     <slot />

@@ -9,10 +9,10 @@ import { ORG_ID } from '../data/site';
 const count = String(projects.length).padStart(2, '0');
 const teamCount = String(team.length).padStart(2, '0');
 
-// JSON-LD: the projects as an ItemList of recurring event series, so search
-// engines and AI answer engines can enumerate what Naomakers runs.
+// JSON-LD: the projects as an ItemList of recurring event series, merged
+// into BaseLayout's single @graph, so search engines and AI answer engines
+// can enumerate what Naomakers runs.
 const itemList = {
-  '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Projets de Naomakers',
   itemListElement: projects.map((project, i) => ({
@@ -54,6 +54,7 @@ const itemList = {
 <BaseLayout
   title="Naomakers · association nantaise pour le numérique et la tech"
   description="Naomakers, association à but non lucratif, promeut le numérique à Nantes et accompagne l'écosystème tech : hackathons, meetups et conférences."
+  jsonLdNodes={[itemList]}
 >
   <div class="container">
     <div class="sheet">
@@ -109,12 +110,6 @@ const itemList = {
       </section>
     </div>
   </div>
-
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(itemList)}
-    is:inline
-  />
 </BaseLayout>
 
 <style>
