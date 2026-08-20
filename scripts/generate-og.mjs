@@ -27,13 +27,14 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
   <rect x="96" y="104" width="392" height="46" fill="${LIME}"/>
   <text x="116" y="135" font-family="'Courier New', monospace" font-size="22" font-weight="700" letter-spacing="1.5" fill="${INK}">ASSOCIATION · NANTES · FR</text>
 
-  <text x="94" y="330" font-family="'Helvetica Neue', Arial, sans-serif" font-size="140" font-weight="700" letter-spacing="-5" fill="${INK}">Naomakers</text>
+  <text x="94" y="300" font-family="'Helvetica Neue', Arial, sans-serif" font-size="140" font-weight="700" letter-spacing="-5" fill="${INK}">Naomakers</text>
 
-  <text x="96" y="410" font-family="'Helvetica Neue', Arial, sans-serif" font-size="38" font-weight="500" fill="${MUTED}">On fait rayonner le numérique et la tech,</text>
-  <text x="96" y="458" font-family="'Helvetica Neue', Arial, sans-serif" font-size="38" font-weight="500" fill="${MUTED}">à Nantes.</text>
+  <text x="96" y="356" font-family="'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="500" fill="${MUTED}">L'association qui fait rayonner</text>
+  <text x="96" y="396" font-family="'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="500" fill="${MUTED}">le numérique, la tech et l'IA,</text>
+  <text x="96" y="436" font-family="'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="500" fill="${MUTED}">à Nantes.</text>
 
-  <line x1="96" y1="516" x2="${W - 96}" y2="516" stroke="${INK}" stroke-width="1.5"/>
-  <text x="96" y="556" font-family="'Courier New', monospace" font-size="21" letter-spacing="1" fill="${INK}">HACKATHONS · MEETUPS · CONFÉRENCES · COMMUNAUTÉ</text>
+  <line x1="96" y1="486" x2="${W - 96}" y2="486" stroke="${INK}" stroke-width="1.5"/>
+  <text x="96" y="522" font-family="'Courier New', monospace" font-size="21" letter-spacing="1" fill="${INK}">HACKATHONS · MEETUPS · CONFÉRENCES · COMMUNAUTÉ</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile('public/og.png');
