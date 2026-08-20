@@ -74,6 +74,7 @@ export const projects: Project[] = [
     stats: [
       { label: 'Projets par édition', value: 14 },
       { label: 'Participants', value: 100 },
+      { label: 'Depuis', value: 2018 },
     ],
   },
   {
@@ -110,7 +111,7 @@ export const projects: Project[] = [
       // U+202F (narrow no-break space): the French thousands separator must
       // never wrap at the end of a line inside a narrow spec-sheet cell.
       { label: 'Membres', value: '~1 500' },
-      { label: 'Événements', value: 50 },
+      { label: 'Événements par an', value: 15 },
     ],
   },
   {
@@ -124,5 +125,9 @@ export const projects: Project[] = [
     imageAlt:
       "Illustration futuriste d'un immense bâtiment en forme de tête d'éléphant dominant la skyline de Nantes au crépuscule.",
     eventType: 'EducationEvent',
+    stats: [
+      { label: 'Participants', value: 400 },
+      { label: 'Speakers', value: 20 },
+    ],
   },
 ];

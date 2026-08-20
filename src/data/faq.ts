@@ -24,7 +24,7 @@ export const faq: FaqEntry[] = [
   {
     question: "Qu'est-ce que le meetup Generative AI Nantes ?",
     answer:
-      "Generative AI Nantes est le meetup nantais dédié à l'IA générative et aux LLM, organisé par Naomakers. Il réunit environ 1 500 membres autour de talks et de workshops pour la communauté tech et produit, avec 50 événements organisés et une note de 4,8/5 sur 234 avis.",
+      "Generative AI Nantes est le meetup nantais dédié à l'IA générative et aux LLM, organisé par Naomakers. Il réunit environ 1 500 membres autour de talks et de workshops pour la communauté tech et produit, avec 15 événements par an et une note de 4,8/5 sur 234 avis.",
   },
   {
     question: 'Quelle différence entre Shift et le Startup Weekend Nantes ?',
