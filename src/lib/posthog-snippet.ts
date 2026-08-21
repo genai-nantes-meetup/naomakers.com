@@ -56,8 +56,30 @@ export function buildPostHogSnippet(token: string): string {
   // `persistence: "cookie"` and `autocapture: true` were chosen explicitly
   // for this project; the trade-offs (cookie weight on every request,
   // CNIL exemption not met without a privacy notice) are documented in the
-  // install plan, not repeated here.
-  const init = `posthog.init(${jsString(token)},{api_host:${jsString(POSTHOG_API_HOST)},ui_host:${jsString(POSTHOG_UI_HOST)},defaults:${jsString(POSTHOG_DEFAULTS)},autocapture:true,persistence:"cookie"});posthog.register({site:"naomakers.com",environment:"production"});`;
+  // install plan, not repeated here. Spread across multiple lines (unlike
+  // the minified loader above) so the emitted page source stays readable.
+  //
+  // `capture_pageview`/`capture_pageleave` are forced explicitly rather
+  // than left to the `defaults` bundle: this is a one-pager whose nav
+  // pushes history entries for in-page anchors (#projets, #equipe, #faq),
+  // and `defaults`' `history_change` pageview mode has changed behaviour
+  // across SDK versions — pin it instead of trusting it not to fire one
+  // `$pageview` per anchor click.
+  const init = `
+posthog.init(${jsString(token)}, {
+  api_host: ${jsString(POSTHOG_API_HOST)},
+  ui_host: ${jsString(POSTHOG_UI_HOST)},
+  defaults: ${jsString(POSTHOG_DEFAULTS)},
+  autocapture: true,
+  capture_pageview: true,
+  capture_pageleave: true,
+  persistence: "cookie",
+});
+posthog.register({
+  site: "naomakers.com",
+  environment: "production",
+});
+`;
 
   return loader + init;
 }
