@@ -24,6 +24,13 @@ factually identical — not just similarly worded:
   script and re-run `node scripts/generate-og.mjs` in the same commit; the
   build does not regenerate it automatically.
 
+## Analytics
+
+Application code must call `capture()` from `src/lib/analytics.ts` for any
+tracking need — never call `window.posthog` directly. See the "Analytics"
+section in `README.md` for the full config (token, naming convention,
+`data-analytics-*` markup contract).
+
 ## Design
 
 `DESIGN.md` is the source of truth for the visual system (typography, color,

@@ -1,0 +1,9 @@
+# Regex patterns of URLs the `build-and-test.yml` lychee job must not check
+# in dist/.
+
+# PostHog reverse proxy: emitted as a <link rel="preconnect"> in the head of
+# every production build. lychee reads the `href` of every <link> regardless
+# of `rel`, but the proxy's root path is not a browsable page — it only
+# serves the SDK under /static/ and the ingestion/config APIs — so it would
+# fail the build on a link that was never meant to be one.
+^https://hogpost\.naomakers\.com

@@ -10,15 +10,34 @@ interface Props {
 }
 
 const { project, index, priority = false } = Astro.props;
-const { title, kind, description, url, image, imageAlt, wip, rating, stats } =
-  project;
+const {
+  title,
+  kind,
+  slug,
+  description,
+  url,
+  image,
+  imageAlt,
+  wip,
+  rating,
+  stats,
+} = project;
 
 // Upcoming projects have no external link and render as a plain card.
 const Tag = url ? 'a' : 'div';
 // `noreferrer` is intentionally omitted (unlike the footer's own external
 // links) so satellite sites can see the naomakers.com referral in their
-// analytics.
-const linkAttrs = url ? { href: url, target: '_blank', rel: 'noopener' } : {};
+// analytics. `data-analytics-*` is picked up by the delegated click
+// listener in `BaseLayout.astro` — no per-component JS import needed.
+const linkAttrs = url
+  ? {
+      href: url,
+      target: '_blank',
+      rel: 'noopener',
+      'data-analytics-event': 'project_card_clicked',
+      'data-analytics-project': slug,
+    }
+  : {};
 const num = String(index).padStart(2, '0');
 
 // French decimal comma for the visible rating; the JSON-LD keeps the raw
