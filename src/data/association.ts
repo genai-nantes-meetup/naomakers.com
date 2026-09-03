@@ -32,7 +32,7 @@ export const association = {
     'Écosystème numérique nantais',
   ],
   statutesUrl:
-    'https://drive.google.com/file/d/1cl5sOdBnbweNvQ-F714bRpftWKmOZHVm/view?usp=sharing',
+    'https://drive.google.com/file/d/1KPyfjHpl8Vhnoe0ObqCeUw-SXbPh5rKe/view',
   pappersUrl: 'https://www.pappers.fr/entreprise/naomakers-901264374',
   dataGouvUrl: 'https://annuaire-entreprises.data.gouv.fr/entreprise/901264374',
 };
