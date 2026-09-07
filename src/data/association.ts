@@ -19,7 +19,7 @@ export const association = {
   legalStatus: 'Association loi 1901 à but non lucratif',
   /** Digits only, as used in the JSON-LD `identifier` values. */
   siren: '901264374',
-  siretDigits: '90126437400025',
+  siretDigits: '90126437400033',
   /** Grouped display format, for the footer and llms.txt. */
   siretDisplay: '901 264 374 00025',
   rna: 'W442026186',
