@@ -7,3 +7,8 @@
 # serves the SDK under /static/ and the ingestion/config APIs — so it would
 # fail the build on a link that was never meant to be one.
 ^https://hogpost\.naomakers\.com
+
+# pappers.fr blocks bot/crawler requests with 403. The page exists and is
+# linked intentionally as part of the association's legal identity, but
+# lychee can't fetch it. Skip the check; the link is verified manually.
+^https://www\.pappers\.fr/entreprise/naomakers-901264374
