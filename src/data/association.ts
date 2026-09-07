@@ -21,9 +21,9 @@ export const association = {
   siren: '901264374',
   siretDigits: '90126437400033',
   /** Grouped display format, for the footer and llms.txt. */
-  siretDisplay: '901 264 374 00025',
-  rna: 'W442026186',
-  knowsAbout: [
+    siretDisplay: '901 264 374 00033',
+    rna: 'W442026186',
+    knowsAbout: [
     'Intelligence artificielle générative',
     'Grands modèles de langage (LLM)',
     'Hackathons',
