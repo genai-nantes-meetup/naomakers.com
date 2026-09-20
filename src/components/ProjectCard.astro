@@ -21,19 +21,21 @@ const {
   wip,
   rating,
   stats,
+  teamMembers,
 } = project;
 
 // Upcoming projects have no external link and render as a plain card.
-const Tag = url ? 'a' : 'div';
+// Tag is always <div> to avoid nested <a> issues (browsers auto-close
+// outer anchors when encountering nested ones, leaving the card link broken).
+// Card-level click navigation is handled by the script below.
+const Tag = 'div';
 // `noreferrer` is intentionally omitted (unlike the footer's own external
 // links) so satellite sites can see the naomakers.com referral in their
 // analytics. `data-analytics-*` is picked up by the delegated click
 // listener in `BaseLayout.astro` — no per-component JS import needed.
 const linkAttrs = url
   ? {
-      href: url,
-      target: '_blank',
-      rel: 'noopener',
+      'data-url': url,
       'data-analytics-event': 'project_card_clicked',
       'data-analytics-project': slug,
     }
@@ -88,6 +90,56 @@ const specs: { label: string; value: string }[] = [
   <div class="card-body">
     <h3>{title}</h3>
     <p>{description}</p>
+    {
+      teamMembers.length > 0 && (
+        <div class="team-bar">
+          {teamMembers.map((member) => (
+            member.url ? (
+              <a
+                href={member.url}
+                target="_blank"
+                rel="noopener"
+                class="team-photo"
+                aria-label={member.name}
+                data-analytics-event="team_member_clicked"
+                data-analytics-project={slug}
+                data-analytics-member={member.slug}
+              >
+                {member.photo && (
+                  <Image
+                    src={member.photo}
+                    alt={member.name}
+                    width={40}
+                    height={40}
+                    sizes="40px"
+                  />
+                )}
+                <span class="team-name">{member.name}</span>
+              </a>
+            ) : (
+              <span
+                class="team-photo"
+                aria-label={member.name}
+                data-analytics-event="team_member_clicked"
+                data-analytics-project={slug}
+                data-analytics-member={member.slug}
+              >
+                {member.photo && (
+                  <Image
+                    src={member.photo}
+                    alt={member.name}
+                    width={40}
+                    height={40}
+                    sizes="40px"
+                  />
+                )}
+                <span class="team-name">{member.name}</span>
+              </span>
+            )
+          ))}
+        </div>
+      )
+    }
     <div class="card-footer">
       {
         specs.length > 0 && (
@@ -112,6 +164,23 @@ const specs: { label: string; value: string }[] = [
   </div>
 </Tag>
 
+<script is:inline>
+  // Handle card clicks: the outer <Tag> is now a <div> (no nested <a>)
+  // so navigation to the project URL must be done via this script.
+  document.addEventListener('click', (e) => {
+    // Let native <a> links (team members with a URL) handle their own clicks
+    if (e.target.closest('a')) return;
+    // Don't intercept team-member spans (no URL) — they're not navigable
+    if (e.target.closest('.team-bar [data-analytics-event="team_member_clicked"]')) return;
+    const card = e.target.closest('[data-url]');
+    if (card) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(card.dataset.url, '_blank', 'noopener');
+    }
+  });
+</script>
+
 <style>
   .card {
     display: flex;
@@ -120,12 +189,13 @@ const specs: { label: string; value: string }[] = [
     border: 1.5px solid var(--ink);
     color: inherit;
     text-decoration: none;
+    cursor: pointer;
     transition:
       transform var(--dur) var(--ease),
       box-shadow var(--dur) var(--ease);
   }
 
-  a.card:hover {
+  .card:hover {
     transform: translate(-3px, -3px);
     box-shadow: 6px 6px 0 0 var(--accent);
   }
@@ -171,7 +241,7 @@ const specs: { label: string; value: string }[] = [
     transition: filter var(--dur) var(--ease);
   }
 
-  a.card:hover .card-media :global(img) {
+  .card:hover .card-media :global(img) {
     filter: grayscale(0) contrast(1);
   }
 
@@ -276,8 +346,53 @@ const specs: { label: string; value: string }[] = [
     transition: transform var(--dur) var(--ease);
   }
 
-  a.card:hover .arrow {
+  .card:hover .arrow {
     transform: translateX(4px);
+  }
+
+  .team-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    align-items: center;
+    min-width: 0;
+  }
+
+  .team-photo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+  }
+
+  .team-photo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    object-fit: cover;
+    transition: border-color var(--dur) var(--ease);
+  }
+
+  .team-photo:hover img {
+    border-color: var(--accent);
+  }
+
+  .team-name {
+    font-size: var(--step--1);
+    color: var(--muted);
+    transition: color var(--dur) var(--ease);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 8rem;
+  }
+
+  .team-photo:hover .team-name {
+    color: var(--ink);
   }
 
   .card--wip {

@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import TeamMember from '../components/TeamMember.astro';
+import { team } from '../data/team';
+import { projects } from '../data/projects';
+
+const title = "L'équipe · Naomakers";
+const description =
+  "Découvrez les membres de l'association Naomakers et les équipes organisatrices de nos événements.";
+
+const teamCount = String(team.length).padStart(2, '0');
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="container">
+    <section id="team" aria-labelledby="team-heading" class="sheet">
+      <Navbar />
+      <div class="section-label section-label--team">
+        <h2 class="mono" id="team-heading">Le Bureau</h2>
+        <span class="mono count">[ {teamCount} ]</span>
+      </div>
+
+      <p class="team-lede">
+        Les membres de l'association, tenu bénévolement par des acteurs de
+        l'écosystème tech nantais.
+      </p>
+
+      <div class="grid">
+        {team.map((member, i) => <TeamMember member={member} index={i + 1} />)}
+      </div>
+    </section>
+
+    {
+      projects.map((project) => (
+        <section
+          id={`equipe-${project.slug}`}
+          aria-labelledby={`equipe-${project.slug}-heading`}
+          class="sheet"
+        >
+          <div class="section-label section-label--team">
+            <h2 class="mono" id={`equipe-${project.slug}-heading`}>
+              {project.title} — l'équipe orga
+            </h2>
+            <span class="mono count">
+              [ {String(project.teamMembers.length).padStart(2, '0')} ]
+            </span>
+          </div>
+
+          <div class="grid">
+            {project.teamMembers.map((member, i) => (
+              <TeamMember member={member} index={i + 1} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .sheet {
+    margin-top: var(--space-6);
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+    padding: clamp(var(--space-3), 4vw, var(--space-6));
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .section-label--team {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-2);
+  }
+
+  .team-lede {
+    max-width: 40rem;
+    margin: 0 0 var(--space-4);
+    color: var(--muted);
+  }
+
+  .section-label h2 {
+    margin: 0;
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+  }
+
+  .count {
+    color: var(--muted);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 720px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

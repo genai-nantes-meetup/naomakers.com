@@ -5,15 +5,15 @@ import shiftHackathon from '../assets/shift-hackathon.webp';
 import generativeAiNantes from '../assets/generative-ai-nantes.webp';
 import genAiDays from '../assets/genai-days-nantes.jpg';
 
-/**
- * A citable figure shown on the card and mirrored into JSON-LD as an
+import { members, type Member } from './team';
+
+/** A citable figure shown on the card and mirrored into JSON-LD as an
  * `additionalProperty` (schema.org PropertyValue). `label` is both the
  * visible caption and the PropertyValue `name`, `value` is rendered as-is
  * and reused as the PropertyValue `value`, so visible and structured data
  * cannot drift apart by construction. `value` accepts a string for
  * approximate or ordinal figures ("~1 500", "3ᵉ en 2026"): PropertyValue.value
- * takes Text or Number.
- */
+ * takes Text or Number. */
 export type ProjectStat = {
   label: string;
   value: string | number;
@@ -35,28 +35,30 @@ export type Project = {
   /**
    * Alt text describing what the cover image actually shows (a scene, not
    * a restatement of `title`, which already sits right below it in the
-   * card). Falls back to a generic caption when a project has no image.
-   */
+   * card). Falls back to a generic caption when a project has no image. */
   imageAlt?: string;
   /** Marks a work-in-progress project (renders a "Bientôt" tag). */
   wip?: boolean;
   /**
    * Schema.org Event subtype layered onto the `EventSeries` JSON-LD `@type`
    * (e.g. `['EventSeries', 'SocialEvent']`) so search/AI engines can tell
-   * a recurring meetup apart from a hackathon or a conference.
-   */
+   * a recurring meetup apart from a hackathon or a conference. */
   eventType?: 'BusinessEvent' | 'SocialEvent' | 'EducationEvent';
   /**
    * Average satisfaction rating out of 5, from a genuine third-party survey.
    * Rendered both as visible text on the card and as JSON-LD
    * `AggregateRating` (structured data must mirror visible content). Kept
    * separate from `stats`: it is the only figure with a first-class
-   * schema.org property (and SERP treatment) of its own.
-   */
+   * schema.org property (and SERP treatment) of its own. */
   rating?: { value: number; count: number; bestRating: number };
   /** Cap at 4 entries — the card layout is a 2-column grid. */
   stats?: ProjectStat[];
+  /** Organizing team members for this event. Single source of truth. */
+  teamMembers: Member[];
 };
+
+// Re-export Member type from team.ts for the Project type
+export type { Member } from './team';
 
 /** All projects run by the naomakers association, in display order. */
 export const projects: Project[] = [
@@ -76,6 +78,16 @@ export const projects: Project[] = [
       { label: 'Participants', value: 100 },
       { label: 'Depuis', value: 2018 },
     ],
+    teamMembers: [
+      members.florencePoyvre,
+      members.guillaumeParthenay,
+      members.robinGoutard,
+      members.florianHerveou,
+      members.louisAmmonique,
+      members.claraGarnier,
+      members.anaPascaud,
+      members.gregoryThibord,
+    ],
   },
   {
     slug: 'shift-hackathon',
@@ -93,6 +105,13 @@ export const projects: Project[] = [
       { label: 'Édition', value: '3ᵉ en 2026' },
       { label: 'Projets par édition', value: 14 },
       { label: 'Participants', value: 100 },
+    ],
+    teamMembers: [
+      members.maximePitussi,
+      members.samuelBerthe,
+      members.simonTimssale,
+      members.florencePoyvre,
+      members.jaafarSteiblenRaji,
     ],
   },
   {
@@ -113,6 +132,12 @@ export const projects: Project[] = [
       { label: 'Membres', value: '~1 500' },
       { label: 'Événements par an', value: 15 },
     ],
+    teamMembers: [
+      members.maximePitussi,
+      members.samuelBerthe,
+      members.dorianOuvrard,
+      members.remiWetteren
+    ],
   },
   {
     slug: 'genai-days-nantes',
@@ -128,6 +153,14 @@ export const projects: Project[] = [
     stats: [
       { label: 'Participants', value: 400 },
       { label: 'Speakers', value: 20 },
+    ],
+    teamMembers: [
+      members.maximePitussi,
+      members.samuelBerthe,
+      members.dorianOuvrard,
+      members.remiWetteren,
+      members.judieBoulissiere,
+      members.emilieBlum,
     ],
   },
 ];

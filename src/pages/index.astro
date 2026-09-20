@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import TeamMember from '../components/TeamMember.astro';
 import FaqItem from '../components/FaqItem.astro';
 import { projects } from '../data/projects';
-import { team } from '../data/team';
 import { faq } from '../data/faq';
 import { ORG_ID, WEBPAGE_ID, WEBSITE_ID, projectId } from '../data/site';
 
@@ -13,7 +12,6 @@ const description =
   "Naomakers, association à but non lucratif, promeut le numérique, la tech et l'IA générative à Nantes et accompagne l'écosystème tech : hackathons, meetups et conférences.";
 
 const count = String(projects.length).padStart(2, '0');
-const teamCount = String(team.length).padStart(2, '0');
 const faqCount = String(faq.length).padStart(2, '0');
 
 // JSON-LD: the projects as an ItemList of recurring event series, merged
@@ -90,14 +88,7 @@ const webPage = {
 >
   <div class="container">
     <div class="sheet">
-      <div class="topbar">
-        <a href="/" class="wordmark">Naomakers</a>
-        <nav class="nav mono" aria-label="Sections de la page">
-          <a href="#projets">Projets</a>
-          <a href="#equipe">Équipe</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-      </div>
+      <Navbar />
 
       <header class="hero">
         <p class="eyebrow mono">
@@ -111,7 +102,7 @@ const webPage = {
           Naomakers promeut le secteur du numérique sur le territoire nantais et
           accompagne les personnes comme les acteurs de l'écosystème
           technologique. On agit à travers des hackathons, des meetups et des
-          conférences ouverts à toutes et tous.
+          conférences ouvertes à toutes et tous.
         </p>
       </header>
 
@@ -125,26 +116,6 @@ const webPage = {
           {
             projects.map((project, i) => (
               <ProjectCard project={project} index={i + 1} priority={i === 0} />
-            ))
-          }
-        </div>
-      </section>
-
-      <section id="equipe" aria-labelledby="equipe-heading">
-        <div class="section-label section-label--team">
-          <h2 class="mono" id="equipe-heading">L'équipe</h2>
-          <span class="mono count">[ {teamCount} ]</span>
-        </div>
-
-        <p class="team-lede">
-          Le bureau de l'association, tenu bénévolement par des acteurs de
-          l'écosystème tech nantais.
-        </p>
-
-        <div class="grid">
-          {
-            team.map((member, i) => (
-              <TeamMember member={member} index={i + 1} />
             ))
           }
         </div>
@@ -170,48 +141,6 @@ const webPage = {
     background: var(--surface);
     border: 1.5px solid var(--ink);
     padding: clamp(var(--space-3), 4vw, var(--space-6));
-  }
-
-  .topbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    align-items: baseline;
-    justify-content: space-between;
-    padding-bottom: var(--space-2);
-    border-bottom: 1.5px solid var(--ink);
-  }
-
-  .wordmark {
-    font-weight: 700;
-    font-size: var(--step-1);
-    letter-spacing: -0.03em;
-    text-decoration: none;
-  }
-
-  .nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  .nav a {
-    /* WCAG 2.2 AA target size (DESIGN.md): the mono face sits at
-       --step--1 (0.8rem), so the tap target needs an explicit floor. */
-    display: inline-flex;
-    align-items: center;
-    min-height: 24px;
-    color: var(--muted);
-    text-decoration: none;
-    border-bottom: 1.5px solid transparent;
-    transition:
-      color var(--dur) var(--ease),
-      border-color var(--dur) var(--ease);
-  }
-
-  .nav a:hover {
-    color: var(--ink);
-    border-bottom-color: var(--accent);
   }
 
   .hero {

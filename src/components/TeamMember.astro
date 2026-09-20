@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import type { Member } from '../data/team';
 
 interface Props {
@@ -7,12 +8,12 @@ interface Props {
 }
 
 const { member, index } = Astro.props;
-const { name, role, bio, url } = member;
+const { name, role, bio, orgaBio, url, photo } = member;
 
 const num = String(index).padStart(2, '0');
 
 // Blueprint-style monogram from the name: first letter of first two words,
-// with a graceful fallback for the placeholder "[À compléter]" pattern.
+// used as a fallback when no photo is available.
 const cleaned = name.replace(/[[\]]/g, '').trim();
 const parts = cleaned.split(/\s+/).filter(Boolean);
 const monogram =
@@ -34,11 +35,18 @@ const linkAttrs = url
 
   <div class="member-body">
     <div class="avatar" aria-hidden="true">
-      <span class="monogram">{monogram}</span>
+      {
+        photo ? (
+          <Image src={photo} alt={name} class="avatar-img" widths={[96, 128]} sizes="128px" />
+        ) : (
+          <span class="monogram">{monogram}</span>
+        )
+      }
     </div>
     <div class="member-text">
       <h3>{name}</h3>
-      {bio && <p>{bio}</p>}
+      {bio && <p class="bureau-bio">{bio}</p>}
+      {orgaBio && <p class="orga-bio">{orgaBio}</p>}
       {
         url && (
           <span class="member-link mono">
@@ -101,8 +109,8 @@ const linkAttrs = url
 
   .avatar {
     flex-shrink: 0;
-    width: 64px;
-    height: 64px;
+    width: 128px;
+    height: 128px;
     display: grid;
     place-items: center;
     border: 1.5px solid var(--ink);
@@ -112,6 +120,15 @@ const linkAttrs = url
       linear-gradient(90deg, var(--grid) 1px, transparent 1px);
     background-size: 14px 14px;
     background-position: -1px -1px;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .monogram {
