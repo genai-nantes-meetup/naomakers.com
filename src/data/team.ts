@@ -110,7 +110,7 @@ export const members: Record<string, Member> = {
     slug: 'robin-goutard',
     name: 'Robin Goutard',
     role: 'Ingénieur partenariat',
-    bio: 'Ingénieur partenariat @ Université Gustave Eiffel',
+    bio: 'Ingénieur partenariat et innovation @ Université Gustave Eiffel',
     url: 'https://www.linkedin.com/in/robin-goutard/',
     photo: robinGoutard,
   },
