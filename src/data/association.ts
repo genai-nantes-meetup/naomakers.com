@@ -21,9 +21,9 @@ export const association = {
   siren: '901264374',
   siretDigits: '90126437400033',
   /** Grouped display format, for the footer and llms.txt. */
-    siretDisplay: '901 264 374 00033',
-    rna: 'W442026186',
-    knowsAbout: [
+  siretDisplay: '901 264 374 00033',
+  rna: 'W442026186',
+  knowsAbout: [
     'Intelligence artificielle générative',
     'Grands modèles de langage (LLM)',
     'Hackathons',
@@ -31,6 +31,11 @@ export const association = {
     'Entrepreneuriat tech',
     'Écosystème numérique nantais',
   ],
+  /** National network the association belongs to. */
+  network: {
+    name: 'GenAI France',
+    url: 'https://genai-france.com/',
+  },
   statutesUrl:
     'https://drive.google.com/file/d/1KPyfjHpl8Vhnoe0ObqCeUw-SXbPh5rKe/view',
   pappersUrl: 'https://www.pappers.fr/entreprise/naomakers-901264374',

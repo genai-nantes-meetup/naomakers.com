@@ -52,6 +52,7 @@ const body =
     '',
     `- Statut: ${association.legalStatus}`,
     `- Fondée en: ${association.foundingYear}, à ${association.areaServed}`,
+    `- Réseau: fait partie du réseau [${association.network.name}](${association.network.url})`,
     `- SIRET: ${association.siretDisplay}`,
     `- RNA: ${association.rna}`,
     '',

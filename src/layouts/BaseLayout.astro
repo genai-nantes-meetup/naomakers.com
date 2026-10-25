@@ -79,6 +79,11 @@ const jsonLd = {
       // Registries that identify this exact legal entity — not the project
       // sites, which are separate organizations naomakers.com merely hubs to.
       sameAs: [association.pappersUrl, association.dataGouvUrl],
+      memberOf: {
+        '@type': 'Organization',
+        name: association.network.name,
+        url: association.network.url,
+      },
       // SIRET/SIREN are French registration numbers, not tax IDs (taxID
       // expects a fiscal/VAT number, which a non-profit typically has none
       // of) — exposed generically via `identifier`.
@@ -193,7 +198,16 @@ const jsonLdText = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <div class="titleblock">
           <div class="field">
             <span class="mono label">Organisation</span>
-            <span class="value">{association.name}</span>
+            <span class="value"
+              >{association.name} fait partie du réseau <a
+                class="value-link"
+                href={association.network.url}
+                target="_blank"
+                rel="noopener"
+                data-analytics-event="network_link_clicked"
+                >{association.network.name}</a
+              ></span
+            >
           </div>
           <div class="field">
             <span class="mono label">Localisation</span>
