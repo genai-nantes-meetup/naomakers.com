@@ -5,6 +5,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import FaqItem from '../components/FaqItem.astro';
 import { projects } from '../data/projects';
 import { faq } from '../data/faq';
+import { association } from '../data/association';
 import { ORG_ID, WEBPAGE_ID, WEBSITE_ID, projectId } from '../data/site';
 
 const title = 'Naomakers · association numérique, tech et IA à Nantes';
@@ -98,12 +99,7 @@ const webPage = {
           L'association qui fait rayonner<br />le numérique, la tech et l'IA, à
           Nantes.
         </h1>
-        <p class="lede">
-          Naomakers promeut le secteur du numérique sur le territoire nantais et
-          accompagne les personnes comme les acteurs de l'écosystème
-          technologique. On agit à travers des hackathons, des meetups et des
-          conférences ouvertes à toutes et tous.
-        </p>
+        <p class="lede">{association.description}</p>
       </header>
 
       <section id="projets" aria-labelledby="projets-heading">

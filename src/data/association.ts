@@ -9,7 +9,7 @@ export const association = {
   legalName: 'NAOMAKERS',
   email: 'team@naomakers.com',
   description:
-    "Naomakers est une association à but non lucratif qui promeut le secteur du numérique sur le territoire nantais et accompagne les personnes et les acteurs de l'écosystème technologique à travers hackathons, meetups et conférences.",
+    "Naomakers est le point de rencontre des builders nantais. Créée par des entrepreneurs, l'association à but non lucratif organise hackathons, meetups et conférences.",
   slogan:
     "L'association qui fait rayonner le numérique, la tech et l'IA, à Nantes.",
   foundingYear: '2018',
