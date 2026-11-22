@@ -37,7 +37,13 @@ const linkAttrs = url
     <div class="avatar" aria-hidden="true">
       {
         photo ? (
-          <Image src={photo} alt={name} class="avatar-img" widths={[96, 128]} sizes="128px" />
+          <Image
+            src={photo}
+            alt={name}
+            class="avatar-img"
+            widths={[96, 128]}
+            sizes="128px"
+          />
         ) : (
           <span class="monogram">{monogram}</span>
         )

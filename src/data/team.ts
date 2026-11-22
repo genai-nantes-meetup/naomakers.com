@@ -43,7 +43,8 @@ export const members: Record<string, Member> = {
     slug: 'maxime-pitussi',
     name: 'Maxime Pitussi',
     role: 'Président',
-    orgaBio: 'Pilote la stratégie et représente Naomakers auprès de l\'écosystème nantais.',
+    orgaBio:
+      "Pilote la stratégie et représente Naomakers auprès de l'écosystème nantais.",
     bio: 'Growth Outbound Freelance',
     url: 'https://www.linkedin.com/in/maximepitussi',
     photo: maximePitussi,
@@ -52,7 +53,8 @@ export const members: Record<string, Member> = {
     slug: 'samuel-berthe',
     name: 'Samuel Berthe',
     role: 'Vice-président',
-    orgaBio: 'Épaule la présidence et coordonne les projets : hackathons, meetups, conférence.',
+    orgaBio:
+      'Épaule la présidence et coordonne les projets : hackathons, meetups, conférence.',
     bio: 'Open-source developer',
     url: 'https://www.linkedin.com/in/samuelberthe',
     photo: samuelBerthe,
@@ -61,7 +63,8 @@ export const members: Record<string, Member> = {
     slug: 'florence-poyvre',
     name: 'Florence Poyvre',
     role: 'Membre du bureau',
-    orgaBio: 'Contribue à la vie associative et à la coordination interne du bureau.',
+    orgaBio:
+      'Contribue à la vie associative et à la coordination interne du bureau.',
     bio: 'Associée @ Fly the Nest',
     url: 'https://www.linkedin.com/in/florence-poyvre-b83063111',
     photo: florencePoyvre,
@@ -70,7 +73,8 @@ export const members: Record<string, Member> = {
     slug: 'jaafar-steiblen-raji',
     name: 'Jaafar Steiblen-Raji',
     role: 'Trésorier',
-    orgaBio: 'Tient les comptes de l\'association et sécurise le budget de chaque événement.',
+    orgaBio:
+      "Tient les comptes de l'association et sécurise le budget de chaque événement.",
     bio: 'Founder @ Les Grandes Épopées',
     url: 'https://www.linkedin.com/in/jaafar-raji',
     photo: jaafarSteiblenRaji,
@@ -173,4 +177,9 @@ export const members: Record<string, Member> = {
 };
 
 /** Bureau members (subset of `members`). */
-export const team: Member[] = [members.maximePitussi, members.samuelBerthe, members.florencePoyvre, members.jaafarSteiblenRaji];
+export const team: Member[] = [
+  members.maximePitussi,
+  members.samuelBerthe,
+  members.florencePoyvre,
+  members.jaafarSteiblenRaji,
+];

@@ -136,7 +136,7 @@ export const projects: Project[] = [
       members.maximePitussi,
       members.samuelBerthe,
       members.dorianOuvrard,
-      members.remiWetteren
+      members.remiWetteren,
     ],
   },
   {

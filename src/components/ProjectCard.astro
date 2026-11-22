@@ -93,7 +93,7 @@ const specs: { label: string; value: string }[] = [
     {
       teamMembers.length > 0 && (
         <div class="team-bar">
-          {teamMembers.map((member) => (
+          {teamMembers.map((member) =>
             member.url ? (
               <a
                 href={member.url}
@@ -135,8 +135,8 @@ const specs: { label: string; value: string }[] = [
                 )}
                 <span class="team-name">{member.name}</span>
               </span>
-            )
-          ))}
+            ),
+          )}
         </div>
       )
     }
@@ -171,7 +171,10 @@ const specs: { label: string; value: string }[] = [
     // Let native <a> links (team members with a URL) handle their own clicks
     if (e.target.closest('a')) return;
     // Don't intercept team-member spans (no URL) — they're not navigable
-    if (e.target.closest('.team-bar [data-analytics-event="team_member_clicked"]')) return;
+    if (
+      e.target.closest('.team-bar [data-analytics-event="team_member_clicked"]')
+    )
+      return;
     const card = e.target.closest('[data-url]');
     if (card) {
       e.preventDefault();
